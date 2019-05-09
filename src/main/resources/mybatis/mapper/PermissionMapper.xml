@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.bgcms.dao.PermissionMapper">
+  <resultMap id="BaseResultMap" type="edu.bgcms.model.shiro.Permission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, permission, url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.bgcms.model.shiro.Permission">
+    insert into permission (id, permission, url
+      )
+    values (#{id,jdbcType=INTEGER}, #{permission,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="edu.bgcms.model.shiro.Permission">
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.bgcms.model.shiro.Permission">
+    update permission
+    <set>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.bgcms.model.shiro.Permission">
+    update permission
+    set permission = #{permission,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByUser" resultType="java.util.List" parameterType="java.util.List">
+    SELECT p.permission FROM role_permission as rp LEFT JOIN permission as p
+    WHERE rp.permission_id =p.id AND rp.role_id in
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+</mapper>
