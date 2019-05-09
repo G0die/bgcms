@@ -1,5 +1,10 @@
 package edu.bgcms.model.shiro;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Permission {
     private Integer id;
 
@@ -7,27 +12,4 @@ public class Permission {
 
     private String url;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

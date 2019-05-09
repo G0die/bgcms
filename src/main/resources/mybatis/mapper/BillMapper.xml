@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.bgcms.dao.BillMapper">
+  <resultMap id="BaseResultMap" type="edu.bgcms.model.bill.Bill">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="surplus" jdbcType="DOUBLE" property="surplus" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="doTime" jdbcType="TIMESTAMP" property="dotime" />
+    <result column="creattime" jdbcType="TIMESTAMP" property="creattime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uuid, type, title, remark, amount, surplus, creator, doTime, creattime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bill
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bill
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="edu.bgcms.model.bill.Bill">
+    insert into bill (uuid, type, title, 
+      remark, amount, surplus, 
+      creator, doTime, creattime
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE}, #{surplus,jdbcType=DOUBLE}, 
+      #{creator,jdbcType=VARCHAR}, #{dotime,jdbcType=TIMESTAMP}, #{creattime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="edu.bgcms.model.bill.Bill">
+    insert into bill
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="surplus != null">
+        surplus,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="dotime != null">
+        doTime,
+      </if>
+      <if test="creattime != null">
+        creattime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="surplus != null">
+        #{surplus,jdbcType=DOUBLE},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="dotime != null">
+        #{dotime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creattime != null">
+        #{creattime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.bgcms.model.bill.Bill">
+    update bill
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="surplus != null">
+        surplus = #{surplus,jdbcType=DOUBLE},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="dotime != null">
+        doTime = #{dotime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creattime != null">
+        creattime = #{creattime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.bgcms.model.bill.Bill">
+    update bill
+    set type = #{type,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DOUBLE},
+      surplus = #{surplus,jdbcType=DOUBLE},
+      creator = #{creator,jdbcType=VARCHAR},
+      doTime = #{dotime,jdbcType=TIMESTAMP},
+      creattime = #{creattime,jdbcType=TIMESTAMP}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

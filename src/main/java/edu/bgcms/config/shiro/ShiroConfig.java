@@ -46,13 +46,23 @@ public class ShiroConfig {
 		//放行login.html页面
 		filterMap.put("/login", "anon");
 		filterMap.put("/checkLogin", "anon");
+//		放行js和css
+
+		filterMap.put("/__MACOSX/**", "anon");
+		filterMap.put("/css/**", "anon");
+		filterMap.put("/docs/**", "anon");
+		filterMap.put("/fonts/**", "anon");
+		filterMap.put("/img/**", "anon");
+		filterMap.put("/js/**", "anon");
+		filterMap.put("/plugins/**", "anon");
+
 
 		//授权过滤器
 		//注意：当前授权拦截后，shiro会自动跳转到未授权页面
 		filterMap.put("/add", "perms[user:add]");
 		filterMap.put("/update", "perms[user:update]");
 		
-		filterMap.put("/*", "authc");
+		filterMap.put("/**", "authc");
 		
 		//修改调整的登录页面
 		shiroFilterFactoryBean.setLoginUrl("/login");

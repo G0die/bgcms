@@ -54,6 +54,7 @@ public class UserRealm extends AuthorizingRealm{
 		List<String> permissions = new ArrayList<>();
 		if(roles != null&& roles.size()>0) {
 			permissions = permissionMapper.selectByUser(roles);
+//			LinkedHashMap
 			info.setStringPermissions(new HashSet<>(permissions));
 			info.setRoles(new HashSet<>(roles));
 		}
