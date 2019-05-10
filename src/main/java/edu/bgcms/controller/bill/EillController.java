@@ -20,12 +20,17 @@ public class EillController {
     @Autowired
     private BillMapper billMapper;
 
-    @ResponseBody
+    @RequestMapping("/index")
+    public String index(Model model) {
+        List<Bill> bills = billMapper.selectAll();
+        model.addAttribute("bills",bills);
+        return "/bill/index";
+    }
 
-    @RequestMapping("/list")
-    public List<Bill> toList() {
+    @ResponseBody
+    @RequestMapping("/getList")
+    public List<Bill> getList() {
         List<Bill> bills = billMapper.selectAll();
         return bills;
     }
-
 }

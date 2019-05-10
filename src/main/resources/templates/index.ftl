@@ -112,7 +112,7 @@
 				<li>
 					<a href="#"><i class="fa fa-table"></i> <span class="nav-label">社费公示</span><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a class="J_menuItem" href="/bill/list">社费公示</a>
+						<li><a class="J_menuItem" href="/bill/index">社费公示</a>
 						</li>
 					</ul>
 				</li>

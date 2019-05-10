@@ -48,8 +48,8 @@
             <form method="post" id="loginFm">
                 <h4 class="no-margins">登录：</h4>
                 <p class="m-t-md">登录到桌游社综合管理系统</p>
-                <input type="text" name="account" id="account" class="form-control uname" placeholder="用户名" />
-                <input type="password" name="pwd" id="pwd" class="form-control pword m-b" placeholder="密码" />
+                <input type="text" name="account" id="account" class="form-control uname" placeholder="用户名" value="admin" />
+                <input type="password" name="pwd" id="pwd" class="form-control pword m-b" placeholder="密码" value="admin" />
                 <a href="">忘记密码了？</a>
             </form>
             <button class="btn btn-success btn-block" onclick="login()">登录</button>
