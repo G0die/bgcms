@@ -105,12 +105,21 @@
                 height: 450,
                 autowidth: true,
                 shrinkToFit: true,
-                multiselect: true,//是否多选
+                multiselect: false,//是否多选
+                altRows: true,//设置为交替行表格,默认为false
                 rowNum: 10,
                 rowList: [10, 20, 30],
-                ondblClickRow:function(row){
-                    // var rowData = $('#personxlgrid').jqGrid('getRowData',row);
-                    // window.open(_CTX + "/manage/buildcode/findSubsetList?archivesnum="+ rowData.archivesnum);
+                // ondblClickRow:function(row){
+                //     console.log("db");
+                //     console.log(row);
+                // },
+                onSelectRow:function(row){
+                    // console.log("单击");
+                    // console.log(row);
+                    // openNewPage("/boardGame/details","桌游详情");
+                    // window.open("/boardGame/details?uuid="+row);
+                    var dataUrl = "/boardGame/details?uuid="+row;
+                    parent.addMenuTab(dataUrl,"桌游详情","dataIndex")
                 },
                 colNames: ['uuid','名字', '类型', '简介', '玩家数量',"价格", '当前持有人', '状态', '浏览次数'],
                 colModel: [

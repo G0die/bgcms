@@ -2,6 +2,7 @@ package edu.bgcms.controller.boardGame;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import edu.bgcms.dao.BoardGameMapper;
 import edu.bgcms.model.boardGame.BoardGame;
 import edu.bgcms.service.boardGame.BoardGameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,24 @@ public class BoardGameController {
 
     @Autowired
     private BoardGameService boardGameService;
+    @Autowired
+    private BoardGameMapper boardGameMapper;
 
     @RequestMapping("/list")
     public String toList(){
         return "/boardgame/list";
     }
+    @RequestMapping("/details")
+    public String toDeetails(Model model,String uuid) {
+        BoardGame bg = boardGameMapper.selectByPrimaryKey(uuid);
+        model.addAttribute("bg",bg);
+        return "/boardgame/details";
+    }
+//    @ResponseBody
+//    @RequestMapping("/getDeetails")
+//    public BoardGame getDeetails(String uuid) {
+//
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/getList",produces = "application/json;charset=UTF-8")

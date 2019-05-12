@@ -1,0 +1,1140 @@
+<#assign c=JspTaglibs["http://java.sun.com/jsp/jstl/core"]>
+<@c.import url="/index/head?title=工作记录"/>
+<link rel="stylesheet" href="/css/oafont/iconfont.css">
+<link rel="stylesheet" href="/css/oafont/listLog.css">
+
+<style>
+    .listNum-wrap{
+        position: absolute;
+        top: 100px;
+        left: 40px;
+        background: #fff;
+        padding: 15px;
+        border-radius: 6px;
+        color: #333;
+    }
+    .listNum-wrap label,.listNum-wrap span{
+        color: #999;
+        width: 36px;
+        text-align: left;
+        display: inline-block;
+    }
+    .listNum-content{
+        border-bottom: 1px solid #e4e4e6;
+        margin-top: 10px;
+        padding-bottom: 10px;
+    }
+    .listNum-wrap li:last-child{
+        border: 0;
+    }
+    .RWContent{
+        height: 28px;
+        padding: 4px;
+        font-size: 13px;
+    }
+    .RWName{
+        font-size: 13px;
+    }
+    .RWTime{
+        font-size: 13px;
+        margin-left: 6px;
+    }
+    #sarchBtn{
+        border: none;
+        padding: 4px 16px;
+        font-size: 13px;
+        line-height: 1.6;
+        margin-left: 30px;
+    }
+</style>
+<div class="contentBox">
+    <input type="text" hidden id="dataValue"/>
+    <ul id="ulTabs" class="">
+        <li id="myTabDrop1" class="" onclick="getLogList('/oa/workRecordManage/workRecord/list','','','')" title="日志列表">
+            <span class="iconfont icon-spread-h-bar" style="font-size:19px;"></span>
+        </li>
+        <li id="myTabDrop2" onclick="listByDate();" title="按周查看">
+            <span class="iconfont icon-rili"></span>
+        </li>
+    </ul>
+    <ul class="listNum-wrap" id="showWorkRecordTotal">
+
+    </ul>
+    <div class="innercont">
+        <div id="myLog">
+            <div class="newLog">
+                <#--新建日志-->
+                <div class="weekpic">
+                    <div style="text-align:center;margin-bottom:10px;font-size:12px;">
+                        <span class="fa fa-chevron-left" onclick="beforMonth();"></span>
+                        <span id="year"></span><span>年</span>
+                        <span id="month"></span><span>月</span>
+                        <span class="fa fa-chevron-right" onclick="afterMonth();"></span>
+                    </div>
+
+                    <table border="1" class="weekViewTab" cellspacing="0" style="background: #fff;width:100%;">
+                        <thead>
+                        <tr>
+                            <td>一</td>
+                            <td>二</td>
+                            <td>三</td>
+                            <td>四</td>
+                            <td>五</td>
+                            <td>六</td>
+                            <td>日</td>
+                        </tr>
+                        </thead>
+                        <tbody id="isDate">
+
+                        </tbody>
+                    </table>
+                    <div class="viewStatus">
+                        <span class="bg-yx"></span>已写
+                        <span class="bg-wx"></span>未写
+                    </div>
+                </div>
+                <#--新建日志-->
+
+                <#--        <div style="position:absolute; right: 0; bottom: 0px; width:100%;text-align: center;" onkeypress="addTask(0,&quot;2018-9-10&quot;)">
+                <input class="weekTaskContent" onpaste="inputPaste(this)" id="taskContent" placeholder="请输入任务内容" name="taskContent_0" type="text" style="width: 90%;margin-right:10px;margin-left: 10px;">
+            </div>-->
+
+
+
+                <div class="contTop"  onkeypress="addTask(0,&quot;2018-9-10&quot;)">
+                    <div style="width:100%;text-align: center;" >
+                        <textarea class="weekTaskContent" onpaste="inputPaste(this)"  name="taskContent" id="myLogs" placeholder="今天做了哪些激动人心的工作呢？温馨提示ctrl+v直接上传图片" style="width:100%;height:118px;box-shadow:0px 0px 3px 0px #00000026 inset;margin-bottom:10px;border:1px solid #ccc;color:#333;padding:5px;"></textarea>
+                    </div>
+                    <div  id="att" style="text-align: left; padding-left: 12.5px; padding-right: 12.5px;  right: 0px; bottom: 35px; width: 100%;"></div>
+                    <div class="btnDiv" style="float:right"><button type="button" class="btn-fb" onclick="saveLog()">发 表</button></div>
+                </div>
+
+            </div>
+            <div id="weeks" class="btn-group"
+                 style="margin-bottom: 10px;color: #999;overflow: hidden;">
+                <button type="button" title="上一周" style="cursor:pointer" class="btn btn-white"
+                        id="btnPreviousWeek" onclick="last()">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                <input id="dateTime" type="text" readonly class="form-control m-b" name="account"
+                       style="width: 197px;height: 28px;float: left;background: #FFFFFF;">
+                <button type="button" title="下一周" style="cursor:pointer" class="btn btn-white"
+                        id="btnNextWeek" onclick="next()">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+            <div style="width: 100%;margin-bottom: 20px;display: flex;justify-content: flex-start;align-items: center;">
+                <span class="RWName">名称：</span>
+                <input class="RWContent" type="text" id="keyword" >
+                <span class="RWTime"> 开始时间：</span>
+                <input class="RWContent" type="text" id="starttime" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})">
+                <span class="RWTime"> - 结束时间：</span>
+                <input class="RWContent" type="text" id="endtime" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})">
+                <button type="button" class="btn btn-primary" id="sarchBtn" onclick="searchList()">
+                    <span class="glyphicon glyphicon-search"></span>搜索
+                </button>
+            </div>
+            <#--list-->
+            <ul id="logListWraper" style="">
+
+            </ul>
+            <div class="tsinfo" style="text-align:center;height:20px;line-height:20px;display:none;font-size:12px;padding-bottom:30px;">正在加载中...</div>
+        </div>
+        <div style="" id="dateLog">
+            <div id="divAttachContainer" style="margin:8px;"></div>
+            <div class="clear-both"></div>
+        </div>
+
+        <div class="tab-content" style="margin:4px 0 0 0;display: block;" id="subordinateLog">
+            <div class="time_control" style="height: 34px">
+                <button type="button" title="上一天"
+                        style="cursor:pointer;float: left;margin-left:10px;height: 34px;"
+                        class="btn btn-white" id="btnPrevious"
+                        onclick="lastDay()">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                <input id="day"
+                       onclick="WdatePicker({onpicked:function(){ subordinateRecordList();},dateFmt:'yyyy-MM-dd'})"
+                       type="text" readonly class="form-control m-b"
+                       name="day" style="width:120px;height: 34px;background: #FFFFFF;float: left;">
+                <button type="button" title="下一天" style="cursor:pointer;float: left;height: 34px;"
+                        class="btn btn-white" id="btnNext"
+                        onclick="nextDay()">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+            <table id="subordinateRecordList" cellspacing="0" cellpadding="0">
+
+            </table>
+        </div>
+    </div>
+    <div class="weekcontDiv"><table id="LogList" cellspacing="0" cellpadding="0"></table></div>
+
+
+
+</div>
+
+<script>
+
+</script>
+
+<#--新版list-->
+<script type="text/javascript">
+    //获取list列表
+    var pageIndex=1;
+    var pageSize=10;
+    var numTotal=0;//总数
+    var psize=1;//页数
+    function getLogList(url,keyword,starttime,endtime){
+        $('.weekcontDiv').hide();
+        $('.newLog').show();
+        $('#logListWraper').show();
+        $('#LogList').hide();
+        $('.zg-main').hide();
+        $(".time_control").hide();
+        $("#weeks").hide();
+        $("#myLog").show();
+        $("#subordinateLog").hide();
+        $("#btnAdd").show();
+        $('#myTabDrop1').css('color','#ff7f66');
+        $('#myTabDrop2').css('color','#898989');
+
+        if(psize>=pageIndex){
+            //if(psize>1){
+            $('.tsinfo').show();
+            //}
+
+            $.ajax({
+                url: url,
+                type: "post",
+                dataType: "json",
+                beforeSend:function () {
+                    jBoxTip('查询中...', 'loading');
+                },
+                complete:function () {
+                    $.jBox.closeTip();
+                },
+                data:{
+                    pageSize: pageSize,
+                    pageIndex: pageIndex,
+                    dictionaryNames: "creatorId.base_staff",
+                    sort: "desc",
+                    sortField: "creationTime",
+                    expressions: '[{"field":"数量","expression":"count(1)"}]',
+                    keyword:keyword,
+                    starttime:starttime,
+                    endtime:endtime
+                },
+                async:false,
+                success: function (data) {
+                    // var logName=data.Data.dictionary['creatorId.base_staff'][0].text;
+                    console.log(data,"*******--------*********")
+                    var res=data.Data.data;
+                    numTotal=data.Data.expressions["数量"]
+                    psize=Math.ceil(numTotal/pageSize);
+                    if(psize==1){
+                        $('.tsinfo').hide();
+                    }
+                    if(data.Status){
+                        if(pageIndex==1){
+                            $('#logListWraper').empty();
+                        }
+                        if(res.length>0){
+                            for(var i=0;i<res.length;i++){
+                                var str='';
+                                str+="<li>";// onclick='detail(\""+res[i].uuid+"\")'
+                                str+='<div style="float:left;"><img src="/oa/common/attachment/showImage?id='+res[i].avatar+'" style="width:40px;height:40px;border-radius:40px;"></div>';
+                                str+='<div style="margin-left:50px;margin-bottom:5px;">';
+                                for(var j=0;j<data.Data.dictionary['creatorId.base_staff'].length;j++){
+                                    if(res[i].creatorId==data.Data.dictionary['creatorId.base_staff'][j]['value']){
+                                        str+='<div class="logName">'+data.Data.dictionary['creatorId.base_staff'][j]['text']+'</div>';
+                                    }
+                                }
+                                str+='<div class="boxTime"><span>'+res[i].creationTime+'</span>';//工作日：<span class="worktime">'+res[i].creationTime.substring(0,res[i].creationTime.length-9)+'</span>发布时间：
+                                str+='</div>';
+                                str+='</div>';
+                                str+='<div class="logCont"> <pre>'+res[i].content+'</pre></div>';
+                                str+='<div class="" style="overflow:hidden;">';
+                                str+='<input type="hidden" class="hdinp" value="'+res[i].uuid+'">';
+                                str+="<p class='lookNum' onclick='lookCont(\""+res[i].uuid+"\",this)' style='cursor:pointer;'>浏览";
+                                str+='<span data-look="false">'+res[i].favoriteNumber+'</span>次</p>';
+                                str+='<p class="iconbox">';
+                                str+="<span class='dzicon' style='' onclick='dzNum(\""+res[i].uuid+"\",this)'>";
+                                if(res[i].isLikeNumber){
+                                    str+="<i class='iconfont icon-dianzan' style='vertical-align:middle;color:#ff7f66;' title='点赞'></i>";
+                                }else{
+                                    str+="<i class='iconfont icon-dianzan' style='vertical-align:middle;color:#898989;' title='点赞'></i>";
+                                }
+                                str+='<em class="clickword" style="vertical-align:middle;color:#999;">'+res[i].likeNumber+'</em></span>';
+                                str+="<span class='plicon' style='margin-left:50px;' onclick='getReply(\""+res[i].uuid+"\",this)'><i class='iconfont icon-pinglun' style='vertical-align:middle;' title='评论'></i>";
+                                str+='<em class="plnum" style="vertical-align:middle;color:#999;margin-left:1px;">'+res[i].commentNumber+'</em></span>';
+                                str+='</p>';
+                                str+='</div>';
+                                str+='<div id="lookName" style="width:100%;overflow: hidden;display:none;font-size: 12px;color: #ff7f66;">';
+
+                                str+='</div>';
+                                str+='<div class="plBox" style="">';
+                                str+='<div style="margin-top:10px;"><textarea name="" class="textval" placeholder="请输入评论内容"></textarea>';
+                                str+="<div class='replyBtnDiv'><button type='button' class='btn btn-pl' onclick='myReply(\""+res[i].uuid+"\",this,\""+res[i].creatorId+"\")'>评 论</button></div>";
+                                str+='</div>';
+                                str+='<div class="replyBox">';
+
+                                str+='</div>';
+                                str+='</div>';
+
+                                //添加附件文件
+                                str +='<div id="attId'+i+'" style="float: left; padding-left: 13px" ids="+res[i].attachmentIds+">' ;
+                                str+='</li>';
+                                $('#logListWraper').append(str);
+
+                                if (res[i].attachmentIds != undefined && res[i].attachmentIds != ''  ){
+                                    ShowAttachments("attId"+i, res[i].attachmentIds,null,null,true);
+                                }
+
+
+                            }
+
+                            pageIndex++;
+
+                        }else{
+                            $('.tsinfo').show();
+                            $('.tsinfo').html('没有数据!');
+                        }
+                    }else{
+                        console.log('没有数据');
+                        return false;
+                    }
+
+                }
+            });
+        }else{
+            $('.tsinfo').show();
+            $('.tsinfo').html('没有数据了!');
+        }
+
+        //分页
+        console.log
+        if(pageIndex==2) {
+            $(window).unbind("scroll");
+            $(window).scroll(function () {
+                var scrollTop = $(this).scrollTop();
+                //console.log(scrollTop)
+                var scrollHeight = $(document).height();
+                //console.log(scrollHeight)
+                var windowHeight = $(this).height();
+                //console.log(windowHeight)
+                if (scrollHeight - (scrollTop + windowHeight) <= 80) {
+                    if ($('#myTabDrop1').css('color') == "rgb(255, 127, 102)") {
+                        getLogList(url, keyword, starttime, endtime);
+                    }
+                }
+            });
+        }
+    }
+    //搜索
+    function searchList() {
+        pageIndex=1;
+        psize=1;
+        console.log($("#starttime").val(),"444----------")
+        console.log($("#endtime").val(),"555----------")
+        var start="",end="",keyword="";
+        if($("#keyword").val())
+            keyword=$("#keyword").val();
+        if($("#starttime").val())
+            start=$("#starttime").val()+" 00:00:00";
+        if($("#endtime").val())
+            end=$("#endtime").val()+" 23:59:59";
+        console.log(start);
+        getLogList("/oa/workRecordManage/workRecord/searchList",keyword,start,end);
+    }
+    //查看浏览人
+    function lookCont(uuid,obj){
+        // alert("uuid");
+        $(obj).parent().next('#lookName').empty();
+        if($(obj).parent().next('#lookName').css('display')=='none'){
+            $.ajax({
+                url:'/oa/oaComment/getBowsingInformation',
+                type:'post',
+                data:{
+                    dataType:"日志",
+                    dataId:uuid
+                },
+                success:function(data){
+                    var r=data.Data;
+                    var shtml='';
+                    for(var z=0;z<r.length;z++){
+                        shtml+='<p style="line-height:25px;margin-right:30px;float:left;margin-top:5px;"><img style="width:25px;height:25px;border-radius:25px;margin-right:5px;" src="/oa/common/attachment/showImage?id='+r[z].avatar+'" alt=""><span>'+r[z]['name']+'</span><span style="margin-left:10px;color:#999;">'+r[z]['createTime'].substring(0,r[z]['createTime'].length-3)+'</span></p>'
+                    }
+                    $(obj).parent().next('#lookName').append(shtml);
+                }
+            })
+        }
+        $(obj).parent().next('#lookName').toggle();
+
+    }
+    //获取评论
+    function getReply(uuid,obj){
+        if($(obj).parent().parent().next().next().css('display')=='none'){
+            comReply(uuid,$(obj).closest("li").find(".replyBox"));
+        }
+        $(obj).parent().parent().next().next().toggle();
+    }
+    function comReply(uuid,obj) {
+        $.ajax({
+            url: '/oa/oaComment/GetComment',
+            data: {
+                dataId: uuid,
+                dictionaryNames: "creatorId.base_staff",
+                // sort: "asc",
+                sortField: "createTime"
+            },
+            type: 'post',
+            success: function (data) {
+                if (data.Status == "Ok") {
+                    $(obj).empty();
+                    var res = data.Data.data;
+                    for (var i = 0; i < res.length; i++) {
+                        var str = '';
+                        str += '<div class="repltItem">';
+                        str += '<div style="float:left;"><img src="/oa/common/attachment/showImage?id='+res[i].createAvatar+'" alt="" style="width:30px;height:30px;border-radius:30px;"></div>';
+                        str+="<a href='javascript:;' class='replyTex' style='float:right;' onclick='getChildReply(this)'>回复";
+                        // str+='<em class="replyplnum" style="vertical-align:middle;color:#999;margin-left:1px;">'+res[i].number+'</em>';
+                        str+='</a>';
+                        str+='<input type="hidden" class="hdinpuid" value="'+res[i].uuid+'">';
+                        str += '<div style="margin-left:40px;margin-right:40px;">';
+                        str += '<p>';
+                        if(res[i]['parentId']){
+                            str += '<span class="plName" style="font-size:12px;color:#ff7f66;">' + res[i]['createName'] + '</span>回复';
+                            str+='<span style="font-size:12px;color:#ff7f66;">@'+res[i]['parentName']+':</span>';
+                        }else{
+                            str += '<span class="plName" style="font-size:12px;color:#ff7f66;">' + res[i]['createName'] + '：</span>';
+                        }
+                        str += '<span>' + res[i].content + '</span></p>';
+                        str += '<div style="color:#999;font-size:12px;">' + res[i].createTime.substring(0, res[i].createTime.length - 3) + '</div>';
+                        str += '</div>';
+                        str+='<div class="plChildBox" style="">';
+                        // str+='<div class="replyChildBox"></div>';
+                        for (var j = 0; j < data.Data.dictionary['creatorId.base_staff'].length; j++) {
+                            if (res[i].creatorId == data.Data.dictionary['creatorId.base_staff'][j]['value']) {
+                                str+='<div style="margin-top:10px;"><textarea name="" class="textChildval" placeholder="回复@'+data.Data.dictionary['creatorId.base_staff'][j]['text']+'"></textarea>';
+                            }
+                        }
+                        str+="<div class='replyChildBtnDiv'><button type='button' class='btn btn-pl' onclick='myChildReply(\""+res[i].uuid+"\",this)'>评 论</button></div>";
+                        str+='</div>';
+                        $(obj).append(str);
+                    }
+
+                }
+            }
+        });
+    }
+    //发表评论
+    function myReply(uuid,obj,toId){
+        var textVal=$(obj).parent().prev('.textval').val();
+        if(textVal.trim() ==''){
+            jBoxTip('评论内容不能为空');
+            return;
+        }else{
+            $.ajax({
+                url:'/oa/oaComment/AddComment',
+                type:'post',
+                data:{
+                    dataType:"日志",
+                    dataId:uuid,
+                    content:textVal,
+                    toId:toId
+                },
+                success:function(data){
+                    if(data.Status=="Ok"){
+                        comReply(uuid,$(obj).closest("li").find(".replyBox"));
+                        $(obj).parent().prev('.textval').val('');
+                    }else{
+
+                    }
+                }
+            })
+        }
+    }
+    //    var nowDate = new Date();
+    //    $("#dateTime").val(nowDate.Format('yyyy-MM-dd'));
+    /*日志列表和按周显示tab切换*/
+    // $("#ulTabs li").on('click', function () {
+    //     var index = $(this).index();
+    //     $(".content").eq(index).siblings().css('display', 'none');
+    //     $("#ulTabs").css('display', 'block');
+    //     $(".content").eq(index).css('display', 'block');
+    // });
+    //var cnum=parseInt($("#clickword").text());
+    //点击出现子评论框
+    function getChildReply(obj){
+        $(obj).parents(".repltItem").find(".plChildBox").toggle();
+    }
+    //发表child评论
+    function myChildReply(parentuuid,obj){
+        var textVal=$(obj).parent().prev('.textChildval').val();
+        var dataId=$(obj).parents("li").find(".hdinp").val();
+        if(textVal.trim() ==''){
+            jBoxTip('评论内容不能为空');
+            return;
+        }else{
+            $.ajax({
+                url:'/oa/oaComment/AddComment',
+                type:'post',
+                data:{
+                    dataType:"日志",
+                    dataId:dataId,
+                    content:textVal,
+                    parentId:parentuuid
+
+                },
+                success:function(data){
+                    if(data.Status=="Ok"){
+                        comReply($(obj).parents("li").find(".hdinp").val(),$(obj).closest("li").find(".replyBox"));
+                        $(obj).parent().prev('.textChildval').val('');
+                    }else{
+
+                    }
+                }
+            })
+        }
+    }
+    //页面加载时
+    $(function () {
+        //周试图
+        var date=new Date;
+        var year=date.getFullYear();
+        var month=date.getMonth()+1;
+        $("#year").html(year);
+        $("#month").html(month);
+        getDate(year,month);
+        //周试图
+        $(".time_control").hide();
+        getLogList("/oa/workRecordManage/workRecord/list","","","");
+        lookNum();
+        window.addEventListener("scroll",function(e){
+            lookNum();
+        });
+
+        //回填
+        $.ajax({
+            url:'/oa/workRecordManage/workRecord/addOrEdit',
+            type:'post',
+            success:function(data){
+                if(data.Status==1){
+                    $("#myLogs").val(data.Data.content);
+                    //同步显示图片信息,
+                    ShowAttachments("att", data.Data.attachmentIds);
+                }else{
+                    $("#myLogs").val('');
+                }
+            }
+        })
+
+        // $(".dzicon").mouseover(function(){
+        //     $(this).children('i').css({'color':'#ff7f66'});
+        // }).mouseout(function(){
+        //     $(this).children('i').css({'color':'#898989'});
+        // })
+
+    });
+    //保存日志
+    function saveLog(){
+        var log = $("#myLogs").val();
+        var today = new Date().format('yyyy-MM-dd', new Date());
+
+
+        var $input = $('#myLogs');
+        var attachmentIds = '';
+        if ($input.parent().next() != undefined) {
+            var array = [];
+            $input.parent().next().children().each(function () {
+                if ($(this).attr('id') != null){
+                    var temp = $(this).attr('id').replace("att","") ;
+                    array.push(temp);
+                }
+            });
+            attachmentIds = array.join(',');
+        }
+
+
+        $.ajax({
+            url: "/oa/workRecordManage/workRecord/save",
+            type: "post",
+            dataType: "json",
+            data:{
+                log:log,
+                time:today,
+                attachmentIds:attachmentIds
+            },
+            beforeSend:function () {
+                jBoxTip('保存中...', 'loading');
+            },
+            complete:function () {
+                $.jBox.closeTip();
+            },
+            success: function (data) {
+                if (data.Status == 1) {
+                    jBoxTip("保存成功!");
+                    $('#logListWraper').empty();
+                    pageIndex=1;
+                    getLogList("/oa/workRecordManage/workRecord/list","","","");
+                }else if(data.Status==503){
+                    jBoxTip("无权限!");
+                } else if(data.Status==0){
+                    jBoxTip(data.Data);
+                }else {
+                    jBoxTip("保存失败", "error");
+                }
+
+            }
+        });
+    }
+    //浏览次数
+    function lookNum(){
+
+        for(var i=0;i<$('#logListWraper li').length;i++){
+            var a = $('#logListWraper li').eq(i).offset().top;
+            //if($(window).scrollTop()>($('#logListWraper li').eq(i).offset().top+$('#logListWraper li').eq(i).outerHeight())||($(window).scrollTop()+$(window).height())<$('#logListWraper li').eq(i).offset().top){
+            if(a >= $(window).scrollTop() && a < ($(window).scrollTop() + $(window).height())){
+                var looknumber=parseInt($('#logListWraper li').eq(i).find('.lookNum span').text());
+                if($('#logListWraper li').eq(i).find('.lookNum span').attr('data-look')=='false'){
+                    var inpuuid=$('#logListWraper li').eq(i).find('.hdinp').val();
+                    // looknumber++;
+                    $('#logListWraper li').eq(i).find('.lookNum span').attr('data-look','true')
+                    // $('#logListWraper li').eq(i).find('.lookNum span').text(looknumber)
+                    $.ajax({
+                        url:'/oa/oaComment/AddBrowse',
+                        type:'post',
+                        data:{
+                            dataId:inpuuid,
+                            dataType:"日志"
+                        },
+                        success:function(data){
+                            if(data.Status=="Ok"){
+                                // console.log(data.Status)
+                                looknumber++;
+                                // $('#logListWraper li').eq(i).find('.lookNum span').attr('data-look','true')
+                                $('#logListWraper li').eq(i).find('.lookNum span').text(looknumber)
+                            }else{
+
+                            }
+                        }
+                    })
+
+                }
+            }else{
+
+            }
+        }
+    }
+    //点赞
+    function dzNum(uuid,obj){
+        var cnum=parseInt($(obj).children('.clickword').text());
+        console.log(cnum)
+        $.ajax({
+            url:'/oa/oaComment/AddUpvote',
+            type:'post',
+            data:{
+                dataId:uuid,
+                dataType:"日志"
+            },
+            success:function(data){
+                if(data.Status=="Ok"){
+                    //点赞动画
+                    $.tipsBox({
+                        obj: $(obj),
+                        str: "+1",
+                        callback: function () {
+                        }
+                    });
+                    niceIn($(obj));
+                    cnum++;
+                    $(obj).children('.clickword').text(cnum);
+                    $(obj).children('i').css('color','#ff7f66');
+                }else if(data.Status=="Exception"){
+                    jBoxTip(data.Data)
+                }
+            }
+        })
+    }
+
+
+    //获取日期
+    function getDateTime() {
+        $.post("/oa/workRecordManage/workRecord/getDateTime?date=" + selectId, function (data) {
+            $("#dateTime").val(data.start.substr(0, 10) + " - " + data.end.substr(0, 10));
+//            $("#dateTime").val(data.start.Format('yyyy-MM-dd')+"—"+data.end.Format('yyyy-MM-dd'));
+        });
+    }
+
+    //当前查询的周
+    var selectId = 0; //索引（非编号），由0开始
+    function last() {
+        selectId = selectId - 1;
+        getDateTime();
+        listByDate();
+    }
+
+    function next() {
+        selectId = selectId + 1;
+        getDateTime();
+        listByDate();
+    }
+
+    var dateColumns = [
+        {
+            header: "员工",
+            align: 'center',
+            field: "name",
+            width: '160px',
+            type: 'string',
+            format:function(data,item){
+                var txt='<img src="/oa/common/attachment/showImage?id='+item['avatar']+'" style="width:40px;height:40px;border-radius:40px;margin-right:2px;"><span>'+item['name']+'</span>';
+                return txt;
+            }
+        },
+        {
+            header: '周一',
+            field: "周一",
+            align: 'center',
+            width: 'fill',
+            format: function (text) {
+                if (text == undefined) {
+                    text = '';
+                }
+                var textarea = "<textarea style='width:100%;height: 130px;border: 0;font-size: 13px;overflow:hidden;' title='"+text+"' readonly='true'>" + text + "</textarea>";
+                return textarea;
+                // return escapeHtml(text);
+            }
+        },
+        {
+            header: '周二',
+            field: "周二",
+            align: 'center',
+            width: 'fill',
+            format: function (text) {
+                if (text == undefined) {
+                    text = '';
+                }
+                var textarea = "<textarea style='width:100%;height: 130px;border: 0;font-size: 13px;overflow:hidden' title='"+text+"' readonly='true'>" + text + "</textarea>";
+                return textarea;
+                // return escapeHtml(text);
+            }
+        },
+        {
+            header: '周三',
+            field: "周三",
+            align: 'center',
+            width: 'fill',
+            format: function (text) {
+                if (text == undefined) {
+                    text = '';
+                }
+                var textarea = "<textarea style='width:100%;height: 130px;border: 0;font-size: 13px;overflow:hidden' title='"+text+"' readonly='true'>" + text + "</textarea>";
+                return textarea;
+                // return escapeHtml(text);
+            }
+        },
+        {
+            header: '周四',
+            field: "周四",
+            align: 'center',
+            width: 'fill',
+            format: function (text) {
+                if (text == undefined) {
+                    text = '';
+                }
+                var textarea = "<textarea style='width:100%;height: 130px;border: 0;font-size: 13px;overflow:hidden' title='"+text+"' readonly='true'>" + text + "</textarea>";
+                return textarea;
+                // return escapeHtml(text);
+            }
+        },
+        {
+            header: '周五',
+            field: "周五",
+            align: 'center',
+            width: 'fill',
+            format: function (text) {
+                if (text == undefined) {
+                    text = '';
+                }
+                var textarea = "<textarea style='width:100%;height: 130px;border: 0;font-size: 13px;overflow:hidden' title='"+text+"' readonly='true'>" + text + "</textarea>";
+                return textarea;
+                // return escapeHtml(text);
+            }
+        },
+        {
+            header: '周六',
+            field: "周六",
+            align: 'center',
+            width: 'fill',
+            format: function (text) {
+                if (text == undefined) {
+                    text = '';
+                }
+                var textarea = "<textarea style='width:100%;height: 130px;border: 0;font-size: 13px;overflow:hidden' title='"+text+"' readonly='true'>" + text + "</textarea>";
+                return textarea;
+                // return escapeHtml(text);
+            }
+        },
+        {
+            header: '周日',
+            field: "周日",
+            align: 'center',
+            width: 'fill',
+            format: function (text) {
+                if (text == undefined) {
+                    text = '';
+                }
+                var textarea = "<textarea style='width:100%;height: 130px;border: 0;font-size: 13px;overflow:hidden' title='"+text+"' readonly='true'>" + text + "</textarea>";
+                return textarea;
+                // return escapeHtml(text);
+            }
+        },
+        {
+            header: '当月日志总数',
+            field: "",
+            align: 'center',
+            width: 'fill',
+            format: function (text) {
+                if (text == undefined) {
+                    text = '';
+                }
+                var textarea = "<textarea style='width:100%;height: 130px;border: 0;font-size: 13px;overflow:hidden' title='"+text+"' readonly='true'>" + text + "</textarea>";
+                return textarea;
+                // return escapeHtml(text);
+            }
+        }
+    ];
+
+    //周视图
+    function listByDate() {
+        $('.weekcontDiv').show();
+        $('.newLog').hide();
+        $('.tsinfo').hide();
+        $('.zg-main').show();
+        $('#logListWraper').hide();
+        $('#LogList').show();
+        $("#subordinateLog").hide();
+        $(".time_control").hide();
+        $("#btnAdd").hide();
+        $("#myLog").show();
+        $("#weeks").show();
+        $('#myTabDrop2').css('color','#ff7f66');
+        $('#myTabDrop1').css('color','#898989');
+        getDateTime();
+        $('#LogList').zlGrid({
+            url: "/oa/workRecordManage/workRecord/listByDate?date=" + selectId,
+            /*searchParam: {
+                sort: 'desc',
+                sortField: 'creationTime'
+            },*/
+            checkable: false,
+            columns: dateColumns,
+            pagination:false,
+            onComplete:function () {
+                //去掉table默认样式
+                $('#LogList').removeClass('table-hover');
+                // $('#LogList textarea').mouseenter(function(){
+                //     $(this).prev('.floText').show();
+                // }).mouseleave(function(){
+                //     $(this).prev('.floText').hide();
+                // });
+            }
+//            onClickRow:function (item) {
+//                detail(item.uuid);
+//            }
+        });
+    }
+
+
+    //     function getLogList() {
+    //         $(".time_control").hide();
+    //         $("#weeks").hide();
+    //         $("#myLog").show();
+    //         $("#subordinateLog").hide();
+    //         $("#btnAdd").show();
+    // //        $("#btnSave").hide();
+    //         $('#LogList').zlGrid({
+    //             url: "/oa/workRecordManage/workRecord/list",
+    //             searchParam: {
+    //                 sort: 'desc',
+    //                 sortField: 'creationTime'
+    //             },
+    //             wrap: false,
+    //             checkable: false,
+    //             advancedSearch: true,
+    //             columns: commonColumns,
+    //             onComplete: function (data) {
+    //                 console.log(data);
+    //             },
+    //             onClickRow: function (item) {
+    //                 detail(item.uuid);
+    //             }
+    //         });
+    //     }
+
+    function detail(id) {
+        $.showPopup({
+            remote: "/html/oa/workRecord/add?id=" + id,
+            title: "日志详情",
+            width: 820,
+        })
+    }
+
+    function addRecord() {
+        $.showPopup({
+            remote: "/html/oa/workRecord/add",
+            title: "新建日志",
+            width: 620
+        })
+    }
+
+    /*function save(){
+        $.showPopup({
+            remote: "/common/html/ShowView?viewPath=oa/workRecord/add",
+            title: "编辑日志",
+            width: 820
+        })
+    }*/
+
+    /* function addOrEdit() {
+         $.post("/api/workRecordManage/workRecord/addOrEdit", function (data) {
+             if (data.Status == 1) {
+                 $("#btnAdd").hide();
+             } else {
+                 $("#btnSave").hide();
+             }
+         });
+     }*/
+    var date = new Date().format("yyyy-MM-dd");
+
+    //查看下属的日志
+    function subordinateRecordList() {
+        $("#day").val(date);
+        $(".time_control").show();
+        $("#subordinateLog").show();
+        $("#myLog").hide();
+        $("#weeks").hide();
+        $("#btnAdd").hide();
+        $('#subordinateRecordList').zlGrid({
+            url: "/oa/workRecordManage/workRecord/selectByDateOrNameAndContent?date="+$("#day").val(),
+            // searchParam: {
+            //     sort: 'desc',
+            //     sortField: 'creationTime'
+            // },
+            wrap: false,
+            checkable: false,
+            advancedSearch: true,
+            columns: commonColumns,
+            // onClickRow:function (item) {
+            //     detail(item.uuid);
+            // }
+        });
+    }
+    //日期加减一天
+    function addDate(date, days) {
+        var d = new Date(date);
+        d.setDate(d.getDate() + days);
+        var month = d.getMonth() + 1;
+        var day = d.getDate();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var val = d.getFullYear() + "-" + month + "-" + day;
+        return val;
+    }
+    function lastDay() {
+        var last_day = addDate($("#day").val(), -1);
+        //alert(last_day)
+        date = last_day
+        subordinateRecordList();
+    }
+
+    function nextDay() {
+        var next_day = addDate($("#day").val(), 1);
+        date = next_day
+        //alert(next_day);
+        subordinateRecordList();
+    }
+    //点赞动画方法
+    (function ($) {
+        $.extend({
+            tipsBox: function (options) {
+                options = $.extend({
+                    obj: null,  //jq对象，要在那个html标签上显示
+                    str: "+1",  //字符串，要显示的内容;也可以传一段html，如: "<b style='font-family:Microsoft YaHei;'>+1</b>"
+                    startSize: "12px",  //动画开始的文字大小
+                    endSize: "30px",    //动画结束的文字大小
+                    interval: 600,  //动画时间间隔
+                    color: "#ff7f66",    //文字颜色
+                    callback: function () { }    //回调函数
+                }, options);
+                $("body").append("<span class='num'>" + options.str + "</span>");
+                var box = $(".num");
+                var left = options.obj.offset().left + options.obj.width() / 2;
+                var top = options.obj.offset().top - options.obj.height();
+                box.css({
+                    "position": "absolute",
+                    "left": left + "px",
+                    "top": top + "px",
+                    "z-index": 9999,
+                    "font-size": options.startSize,
+                    "line-height": options.endSize,
+                    "color": options.color
+                });
+                box.animate({
+                    "font-size": options.endSize,
+                    "opacity": "0",
+                    "top": top - parseInt(options.endSize) + "px"
+                }, options.interval, function () {
+                    box.remove();
+                    options.callback();
+                });
+            }
+        });
+    })(jQuery);
+
+    function niceIn(prop){
+        prop.find('i').addClass('niceIn');
+        setTimeout(function(){
+            prop.find('i').removeClass('niceIn');
+        },1000);
+    }
+    //周试图方法
+    function  getDate(year,month) {
+        $.post("/oa/oaComment/getDataIsWriteALog",{'year':year,'month':month},function (data) {
+            var i=0;
+            var str="";
+            str="<tr>";
+            var lastMonth=data.Data["lastMonth"];
+            for(var s=0;s<lastMonth.length;s++){
+                if(lastMonth[s]["isWrite"]){
+                    str+="<td style='color: #ff7f66'>"+lastMonth[s]["day"]+"</td>\n"
+                }else{
+                    str+="<td style='color: #d2d1d1'>"+lastMonth[s]["day"]+"</td>\n"
+                }
+                i++;
+            }
+            var thisMonth=data.Data["thisMonth"];
+            for(var s=0;s<thisMonth.length;s++){
+                if(i!=0){
+                    if(Math.round(i/7) === i/7){
+                        str+="</tr>"
+                        str+="<tr>"
+                    }
+                }
+
+                if(thisMonth[s]["isWrite"]){
+                    str+="<td style='color: #ff7f66'>"+thisMonth[s]["day"]+"</td>\n"
+                }else{
+                    str+="<td>"+thisMonth[s]["day"]+"</td>\n"
+                }
+                i++;
+            }
+            var nextMonth=data.Data["nextMonth"];
+            for(var s=0;s<nextMonth.length;s++){
+                if(nextMonth[s]["isWrite"]){
+                    str+="<td style='color: #ff7f66'>"+nextMonth[s]["day"]+"</td>\n"
+                }else{
+                    str+="<td style='color: #d2d1d1'>"+nextMonth[s]["day"]+"</td>\n"
+                }
+                if(s==lastMonth-1){
+                    str+="</tr>"
+                }
+            }
+            $("#isDate").html(str);
+        });
+    }
+
+    function addData() {
+        var year=$("#year").html()
+        var month=$("#month").html()
+        /*var data=year+"-"+month*/
+        // $("#dataValue").val(year+"-"+month)
+        getWorkRecordTotal(year,month);
+    }
+
+
+
+    // $("#dataValue").on('input propertychange',function(){
+    //     alert("123");
+    //     getWorkRecordTotal();
+    // })
+    // $("#dataValue").change(function () {
+    //     alert("123");
+    //     getWorkRecordTotal();
+    // });
+
+    $("#showWorkRecordTotal").ready(function () {
+        getWorkRecordTotal($("#year").text(),$("#month").text())
+    });
+
+
+    /**
+     * 获取当前日历选择月的日志统计信息
+     */
+    function getWorkRecordTotal(year,month) {
+        $("#showWorkRecordTotal").html("");
+        $.post("/oa/workRecordManage/workRecord/getStaffWorkRecordTotalMonthly",{year:year,month:month},function (data) {
+            if (data.Data.length == 0){
+                return;
+            }
+            for (var i = 0; i <data.Data.length ; i++) {
+                var d = data.Data[i];
+                var li = "<li class='listNum-content'>"
+                    + "<label>姓名：</label><span>"+d.name+"</span>"
+                    + "<label style='width: 60px;margin-left: 10px;'>日志数量：</label><span style='width: 14px;'>"+d.num+"</span></li>"
+                $("#showWorkRecordTotal").append(li);
+
+            }
+        });
+    }
+
+    function beforMonth() {
+        var thisYear=$("#year").html();
+        var thisMonth=$("#month").html();
+
+        if (thisMonth==1){
+            thisMonth=12;
+            thisYear=parseInt(thisYear);
+            thisYear=thisYear-1;
+        }else{
+            thisMonth=parseInt(thisMonth);
+            thisMonth=thisMonth-1;
+
+        }
+        $("#year").html(thisYear);
+        $("#month").html(thisMonth);
+        getDate(thisYear,thisMonth);
+
+
+        addData()
+    }
+
+    function afterMonth() {
+        var thisYear=$("#year").html();
+        var thisMonth=$("#month").html();
+
+        if(thisMonth==12){
+            thisMonth=1;
+            thisYear=parseInt(thisYear);
+            thisYear=thisYear+1;
+        }else{
+            thisMonth=parseInt(thisMonth);
+            thisMonth=thisMonth+1;
+        }
+        $("#year").html(thisYear);
+        $("#month").html(thisMonth);
+
+        getDate(thisYear,thisMonth);
+
+        addData()
+    }
+
+</script>
+
+

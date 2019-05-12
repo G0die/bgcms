@@ -1,0 +1,264 @@
+.iconfont {
+    font-family:"iconfont" !important;
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.icon-dianzan:before { content: "\e60c"; }
+.lookNum{
+    font-size:12px;
+    /*float:left;*/
+    display: inline-block;
+}
+.weekTaskContent:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+}
+.contentBox{
+    width:100%;
+    /*display:flex;*/
+    padding:20px;
+    /*background:#f5f5f5;*/
+    /*background:url(/images/common/body_bg2.jpg) no-repeat;*/
+    /*background-size:cover;*/
+}
+td{
+    overflow:visible !important;
+    color:#333;
+}
+.newLog{
+    overflow:hidden;
+    margin-bottom:30px;
+}
+.newLog .contTop{
+    width:74%;
+    float:right;
+    margin-top:26px;
+}
+.newLog .weekpic{
+    width:23%;
+    float:left;
+}
+.newLog .weekpic .weekViewTab thead tr{
+    text-align:center;
+    font-weight:800;
+    height:24px;
+    font-size:12px;
+}
+.newLog .weekpic .weekViewTab tbody tr{
+    text-align: center;
+    height:18px;
+    font-size:12px;
+}
+.newLog .weekpic .viewStatus .bg-yx{
+    width:12px;
+    height:12px;
+    display: inline-block;
+    background:#ff7f66;
+    vertical-align: middle;
+    margin-right:2px;
+}
+.newLog .weekpic .viewStatus{
+    margin-top:2px;
+    color:#333;
+}
+.newLog .weekpic .viewStatus .bg-wx{
+    width:12px;
+    height:12px;
+    display: inline-block;
+    background:#333;
+    vertical-align: middle;
+    margin-right:2px;
+    margin-left:5px;
+}
+#logListWraper li{
+    background:#fff;
+    padding:20px;
+    margin-bottom:10px;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #ccc;
+}
+.floText{
+    width:300px;
+    overflow:hidden;
+    min-height:130px;
+    border:1px solid #ccc;
+    position:absolute;
+    top:0;left:0;
+    z-index:999;
+    background:#fff;
+    border-radius:5px;
+    display:none;
+}
+.logName{
+    font-size:14px;
+    font-weight:800;
+}
+.boxTime{
+    margin:5px 0;
+    font-size:12px;
+    color:#999;
+}
+.boxTime .worktime{
+    margin-right:10px;
+}
+.logCont{
+    font-size:13px;
+    padding-bottom:20px;
+    line-height:1.6;
+    word-wrap: break-word;
+}
+.lookNum{
+    font-size:12px;
+    color:#777;
+    float:left;
+    margin-top:8px;
+}
+.nav > li.active{
+    border-left:none;
+}
+#ulTabs{
+    width:200px;
+    float:left;
+}
+#ulTabs li{
+    float:left;
+    color:#898989;
+    cursor:pointer;
+    margin-left:5px;
+}
+#ulTabs li span{
+    font-size:18px;
+}
+#ulTabs li#myTabDrop1{
+    color:#ff7f66;
+}
+.innercont{
+    /*flex:1;*/
+    margin-left:230px;
+    margin-right:230px;
+    /*width:50%;*/
+}
+.nav-pills>li>a,.nav-pills>li>a:focus,.nav-pills>li>a:hover{
+    color:#2F3A48;
+    background:#fff;
+    border-radius:0;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{
+    color: #fff;
+    background-color:#09BEBD;
+}
+.iconbox{
+    float:right;
+}
+.iconbox i{
+    font-size:20px;
+    color:#898989;
+}
+.btn-fb {
+    background: #ff7f66;
+    color: #fff;
+    border: none;
+    padding: 4px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.btn-fb:hover{
+    background:#f34e2e;
+    color:#fff;
+}
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{
+    outline:none;
+}
+.btnDiv{
+    text-align:right;
+    /*margin-bottom:30px;*/
+}
+#weeks{
+    display:none;
+}
+.time_control{
+    display:none;
+}
+.table{
+    background:#fff;
+}
+.table thead tr th{
+    background-color:#f5f5f5;
+}
+.plBox,.plChildBox{
+    display:none;
+    overflow:hidden;
+    margin-top:10px;
+}
+.plBox textarea{
+    width:100%;
+    height:70px;
+    border-radius: 5px;
+    border:1px solid #ccc;
+    box-shadow: 0px 0px 3px 0px #00000026 inset;
+    padding:5px;
+}
+.plChildBox textarea{
+    height:50px;
+}
+.plBox .repltItem{
+    margin-top:10px;
+}
+.replyChildBox{
+    padding-left:20px;
+}
+.replyBtnDiv,.replyChildBtnDiv{
+    margin-top:5px;
+    text-align: right;
+}
+.replyBtnDiv .btn-pl,.replyChildBtnDiv .btn-pl{
+    background: #ff7f66;
+    color: #fff;
+    border: none;
+    padding: 2px 10px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+.table >tbody>tr:nth-child(2n){
+    background:#fff;
+}
+.replyTex{
+    color:#333;
+}
+.replyTex:hover{
+    color:#ff7f66;
+}
+pre{
+    white-space: pre-wrap;
+}
+@-webkit-keyframes niceIn{0%{opacity:1;-webkit-transform:scale(1);
+    transform:scale(1)}50%{opacity:1;-webkit-transform:scale(1.5);
+                           transform:scale(1.5)}70%{-webkit-transform:scale(.8);
+                                                    transform:scale(.8)}100%{opacity:1;-webkit-transform:scale(1);
+                                                                            transform:scale(1)}}@keyframes niceIn{0%{opacity:1;-webkit-transform:scale(1);
+    -ms-transform:scale(1);transform:scale(1)}50%{opacity:1;
+                                                  -webkit-transform:scale(1.5);-ms-transform:scale(1.5);
+                                                  transform:scale(1.5)}70%{-webkit-transform:scale(.8);
+                                                                           -ms-transform:scale(.8);
+                                                                           transform:scale(.8)}100%{opacity:1;-webkit-transform:scale(1);
+                                                                                                   -ms-transform:scale(1);
+                                                                                                   transform:scale(1)}}@-o-keyframes niceIn{0%{opacity:1;
+    -o-transform:scale(1);transform:scale(1)}50%{opacity:1;
+                                                 -o-transform:scale(1.5);transform:scale(1.5)}70%{-o-transform:scale(.8);
+                                                                                                  transform:scale(.8)}100%{opacity:1;-o-transform:scale(1);
+                                                                                                                          transform:scale(1)}}@-moz-keyframes niceIn{0%{opacity:1;
+    -moz-transform:scale(1);transform:scale(1)}50%{opacity:1;
+                                                   -moz-transform:scale(1.5);transform:scale(1.5)}70%{-o-transform:scale(.8);
+                                                                                                      transform:scale(.8)}100%{opacity:1;-moz-transform:scale(1);
+                                                                                                                              transform:scale(1)}}
+.niceIn{-webkit-animation:niceIn .8s .2s ease;-moz-animation:niceIn .8s .2s ease;-o-animation:niceIn .8s .2s ease;animation:niceIn .8s .2s ease}

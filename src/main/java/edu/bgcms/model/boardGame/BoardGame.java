@@ -17,7 +17,7 @@ public class BoardGame {
 
     private Integer maxplayers;
 
-    private String buytime;
+    private Date buytime;
 
     private Double money;
 
