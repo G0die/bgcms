@@ -73,6 +73,11 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-12">
+            <div>
+                <button><span class="glyphicon glyphicon-plus"></span>发起众筹</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -94,7 +99,7 @@
 
 <!-- Page-Level Scripts -->
 <script>
-    function aa(){
+    function initTable(){
         $.post("/boardGame/test",function (data) {
             // Configuration for jqGrid Example 2
             $("#listTable").jqGrid({
@@ -227,7 +232,7 @@
     }
     $(document).ready(function () {
         $.jgrid.defaults.styleUI = 'Bootstrap';
-        aa();
+        initTable();
 
     });
 </script>
