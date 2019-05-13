@@ -79,38 +79,38 @@
         </div>
     </div>
     <div class="row">
-        <button type="button" class="btn btn-w-m btn-white">添加账单</button>
+        <button type="button" class="btn btn-w-m btn-white" style="margin-left: 15px;" onclick="toAdd()">添加账单</button>
     </div>
 </div>
 <!-- 全局js -->
 <script src="/js/jquery.min.js?v=2.1.4"></script>
 <script src="/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="/js/plugins/footable/footable.all.min.js"></script>
+<!-- layer javascript -->
+<script src="/js/plugins/layer/layer.min.js"></script>
+<script src="/js/plugins/layer/laydate/laydate.js"></script>
+
 <!-- 自定义js -->
 <script src="/js/content.js?v=1.0.0"></script>
 <script>
-    $(function () {
-        initTable()
-    })
 
-    function initTable() {
-        $.post("/bill/getList", function (data) {
-            var html = '';
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i].doTime);
-                html = '<tr>' +
-                    // '<th style="display: none">'+data[i].uuid+'</th>'+
-                    '<td>' + data[i].title + '</td>' +
-                    '<td>' + data[i].amount + '</td>' +
-                    '<td>' + data[i].surplus + '</td>' +
-                    '<td>' + data[i].creator + '</td>' +
-                    // '<td>'+data[i].doTime+'</td>'+
-                    '<td>' + data[i].remark + '</td>' +
-                    '<td>2018</td>' +
-                    '</tr>'
+    function toAdd(){
+        layer.open({
+            type: 1//Page层类型
+            ,area: ['700px', '300px']
+            ,title: '添加账单。'
+            ,shade: 0.6 //遮罩透明度
+            ,maxmin: true //允许全屏最小化
+            ,anim: 1 //0-6的动画形式，-1不开启
+            ,content: $('#alertDiv')
+        });
+    }
+    function add(){
+        $.post("/bill/add",$("#addBill").serialize(),function(data){
+            layer.msg(data.msg);
+            if(data.status == 1){
+                layer.closeAll();
             }
-            // $("#billTBody").empty();
-            // $("#billTBody").html(html);
         })
     }
 
@@ -121,7 +121,56 @@
     });
 </script>
 
-
+<script>
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#dotime' //指定元素
+        ,trigger: 'click'
+        ,change: function(value, date, endDate){
+            alert(value);
+        }
+    });
+</script>
 </body>
+<div class="col-md-12" id="alertDiv" style="display: none">
+    <form id="addBill">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">名目：</label>
+            <div class="col-sm-9">
+                <input type="text" name="title" class="form-control" placeholder="请输入名目">
+                <span class="help-block m-b-none"> </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">金额：</label>
+            <div class="col-sm-9">
+                <input type="text" name="amount" class="form-control" placeholder="请输入金额">
+                <span class="help-block m-b-none"> </span>
 
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">时间：</label>
+            <div class="col-sm-9">
+                <input type="text" name="dotime" id="dotime" class="form-control" >
+                <span class="help-block m-b-none"> </span>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">类型：</label>
+            <div class="col-sm-9">
+                <label class="radio-inline">
+                    <input type="radio" checked="" value="支出" id="" name="type" style="margin-top: 3px;">支出</label>
+                <label class="radio-inline">
+                    <input type="radio" value="收入" id="" name="type" style="margin-top: 3px;">收入</label>
+                <span class="help-block m-b-none"> </span>
+
+            </div>
+        </div>
+    </form>
+    <div style="float: right;margin-right: 15px; margin-top: 5px;">
+        <button class="btn btn-primary" onclick="add()" style="width: 82px;">保 存</button>
+    </div>
+</div>
 </html>

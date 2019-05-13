@@ -1,4 +1,9 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
 <div class="col-md-12" id="alertDiv">
     <form id="addBill">
         <div class="form-group">
@@ -40,3 +45,6 @@
         <button class="btn btn-primary" onclick="add()" style="width: 82px;">保 存</button>
     </div>
 </div>
+</body>
+</html>
+

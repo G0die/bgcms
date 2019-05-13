@@ -1,8 +1,13 @@
 package edu.bgcms.dto;
 
-import javax.swing.plaf.PanelUI;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.ibatis.annotations.Select;
 
-public class AjaxMessage {
-    public static int stattus;
-    public static String msg;
+@Getter
+@Setter
+public class AjaxMsg {
+    private int status;
+    private String msg;
+    private Object date;
 }
