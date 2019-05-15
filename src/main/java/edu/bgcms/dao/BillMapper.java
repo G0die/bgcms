@@ -17,7 +17,10 @@ public interface BillMapper {
     int updateByPrimaryKeySelective(Bill record);
 
     int updateByPrimaryKey(Bill record);
+    //---------------
     @Select("SELECT `uuid`, `type`, `title`, `remark`, `amount`, `surplus`,(SELECT username FROM `user` as u WHERE u.uuid = bill.creator) as  `creator`, `doTime`" +
-            " FROM `bill` ORDER BY doTime DESC ")
+            " FROM `bill` ORDER BY doTime DESC")
     List<Bill> selectAll();
+    @Select("SELECT surplus FROM `bill` ORDER BY creattime DESC LIMIT 1")
+    double selectSurplus();
 }

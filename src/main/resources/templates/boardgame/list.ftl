@@ -38,45 +38,20 @@
                     <h5>jQuery Grid Plugin – jqGrid</h5>
                 </div>
                 <div class="ibox-content">
-                    <p>
-                        <strong>jqGrid</strong> 是一个用来显示网格数据的jQuery插件，文档比较全面，附带中文版本。访问<a target="_blank" href="http://www.trirand.com/blog/"> 官网</a>
-                    </p>
-                    <p>jqGrid的主要特点为：</p>
-                    <ol>
-                        <li>基于jquery UI主题，开发者可以根据客户要求更换不同的主题</li>
-                        <#--<li>兼容目前所有流行的web浏览器</li>-->
-                        <#--<li>Ajax分页，可以控制每页显示的记录数</li>-->
-                        <#--<li>支持XML，JSON，数组形式的数据源</li>-->
-                        <#--<li>提供丰富的选项配置及方法事件接口</li>-->
-                        <#--<li>支持表格排序，支持拖动列、隐藏列</li>-->
-                        <#--<li>支持滚动加载数据</li>-->
-                        <#--<li>支持实时编辑保存数据内容</li>-->
-                        <#--<li>支持子表格及树形表格</li>-->
-                        <#--<li>支持多语言</li>-->
-                        <#--<li>免费</li>-->
-                    </ol>
-                    <hr>
-                    <h4>基本示例</h4>
-
-                    <div class="jqGrid_wrapper">
-                        <table id="table_list_1"></table>
-                        <div id="pager_list_1"></div>
-                    </div>
-                    <p>&nbsp;</p>
-                    <h4 class="m-t">高级用法</h4>
 
 
                     <div class="jqGrid_wrapper">
                         <table id="listTable"></table>
                         <div id="pagerDiv"></div>
                     </div>
+
                 </div>
             </div>
         </div>
         <div class="col-sm-12">
-            <div>
-                <button><span class="glyphicon glyphicon-plus"></span>发起众筹</button>
-            </div>
+            <button type="button" class="btn btn-w-m btn-white" style="margin-left: 15px;"onclick="toAdd()">
+                            <span class="glyphicon glyphicon-plus"> 发起众筹
+            </button>
         </div>
     </div>
 </div>
@@ -84,30 +59,51 @@
 <!-- 全局js -->
 <script src="/js/jquery.min.js?v=2.1.4"></script>
 <script src="/js/bootstrap.min.js?v=3.3.6"></script>
-
-
-
 <!-- Peity -->
 <script src="/js/plugins/peity/jquery.peity.min.js"></script>
-
 <!-- jqGrid -->
 <script src="/js/plugins/jqgrid/i18n/grid.locale-cn.js?0820"></script>
 <script src="/js/plugins/jqgrid/jquery.jqGrid.min.js?0820"></script>
+<!-- layer javascript -->
+<script src="/js/plugins/layer/layer.min.js"></script>
+<script src="/js/plugins/layer/laydate/laydate.js"></script>
 
 <!-- 自定义js -->
 <script src="/js/content.js?v=1.0.0"></script>
 
 <!-- Page-Level Scripts -->
 <script>
-    function initTable(){
-        $.post("/boardGame/test",function (data) {
+    function toAdd() {
+        layer.open({
+            type: 1//Page层类型
+            , area: ['700px', '300px']
+            , title: '添加众筹'
+            , shade: 0.6 //遮罩透明度
+            , maxmin: true //允许全屏最小化
+            , anim: 1 //0-6的动画形式，-1不开启
+            , content: $('#alertDiv')
+        });
+    }
+
+    function add() {
+        $.post("/bill/add", $("#addBill").serialize(), function (data) {
+            layer.msg(data.msg);
+            if (data.status == 1) {
+                layer.closeAll();
+                window.location.reload();
+            }
+        })
+    }
+
+    function initTable() {
+        $.post("/boardGame/test", function (data) {
             // Configuration for jqGrid Example 2
             $("#listTable").jqGrid({
                 // url :"/boardGame/test",
                 // dataType :'json',
                 data: data,
                 datatype: "local",
-                height: 450,
+                height: "auto",
                 autowidth: true,
                 shrinkToFit: true,
                 multiselect: false,//是否多选
@@ -118,15 +114,15 @@
                 //     console.log("db");
                 //     console.log(row);
                 // },
-                onSelectRow:function(row){
+                onSelectRow: function (row) {
                     // console.log("单击");
                     // console.log(row);
                     // openNewPage("/boardGame/details","桌游详情");
                     // window.open("/boardGame/details?uuid="+row);
-                    var dataUrl = "/boardGame/details?uuid="+row;
-                    parent.addMenuTab(dataUrl,"桌游详情","dataIndex")
+                    var dataUrl = "/boardGame/details?uuid=" + row;
+                    parent.addMenuTab(dataUrl, "桌游详情", "dataIndex")
                 },
-                colNames: ['uuid','名字', '类型', '简介', '玩家数量',"价格", '当前持有人', '状态', '浏览次数'],
+                colNames: ['uuid', '名字', '类型', '简介', '玩家数量', "价格", '当前持有人', '状态', '浏览次数'],
                 colModel: [
                     {
                         name: 'uuid',
@@ -194,7 +190,7 @@
                         search: true
                     }
                 ],
-                jsonReader : {
+                jsonReader: {
                     root: "rows",
                     page: "page",    // json中代表当前页码的数据
                     total: "total",    // json中代表页码总数的数据
@@ -230,6 +226,7 @@
             });
         })
     }
+
     $(document).ready(function () {
         $.jgrid.defaults.styleUI = 'Bootstrap';
         initTable();
@@ -238,5 +235,46 @@
 </script>
 
 </body>
-
+<div class="col-md-12" id="alertDiv" style="display: none">
+    <form id="addBg">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">名字：</label>
+            <div class="col-sm-9">
+                <input type="text" name="name" class="form-control" placeholder="请输入名字">
+                <span class="help-block m-b-none"> </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">类型：</label>
+            <div class="col-sm-9">
+                <input type="text" name="type" class="form-control" placeholder="请输入类型">
+                <span class="help-block m-b-none"> </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">玩家数量：</label>
+            <div class="col-sm-9">
+                <input type="text" name="maxPlayers" class="form-control" placeholder="请输入玩家数量">
+                <span class="help-block m-b-none"> </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">金额：</label>
+            <div class="col-sm-9">
+                <input type="text" name="`money" class="form-control" placeholder="请输入金额">
+                <span class="help-block m-b-none"> </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">信息说明：</label>
+            <div class="col-sm-8">
+                <textarea id="information" name="information" class="form-control" required="" aria-required="true"
+                          style="width: 472px;" placeholder="说明:发起众筹者须先付一半费用"></textarea>
+            </div>
+        </div>
+    </form>
+    <div style="float: right;margin-right: 15px; margin-top: 5px;">
+        <button class="btn btn-primary" onclick="add()" style="width: 82px;">保 存</button>
+    </div>
+</div>
 </html>

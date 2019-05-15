@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.bgcms.dao.BoardGameMapper">
-  <resultMap id="BaseResultMap" type="edu.bgcms.model.BoardGame">
+  <resultMap id="BaseResultMap" type="edu.bgcms.model.boardGame.BoardGame">
     <id column="uuid" jdbcType="VARCHAR" property="uuid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="type" jdbcType="VARCHAR" property="type" />
@@ -32,7 +32,7 @@
     delete from boardgame
     where uuid = #{uuid,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="edu.bgcms.model.BoardGame">
+  <insert id="insert" parameterType="edu.bgcms.model.boardGame.BoardGame">
     insert into boardgame (uuid, name, type, 
       information, maxPlayers, buytime, 
       money, applicant, applicantiontime, 
@@ -46,7 +46,7 @@
       #{lends,jdbcType=INTEGER}, #{stars,jdbcType=INTEGER}, #{rating,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="edu.bgcms.model.BoardGame">
+  <insert id="insertSelective" parameterType="edu.bgcms.model.boardGame.BoardGame">
     insert into boardgame
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uuid != null">
@@ -143,7 +143,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="edu.bgcms.model.BoardGame">
+  <update id="updateByPrimaryKeySelective" parameterType="edu.bgcms.model.boardGame.BoardGame">
     update boardgame
     <set>
       <if test="name != null">
@@ -191,7 +191,7 @@
     </set>
     where uuid = #{uuid,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="edu.bgcms.model.BoardGame">
+  <update id="updateByPrimaryKey" parameterType="edu.bgcms.model.boardGame.BoardGame">
     update boardgame
     set name = #{name,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},

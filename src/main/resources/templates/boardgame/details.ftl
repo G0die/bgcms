@@ -35,7 +35,7 @@
                         <h5>玩家数：${bg.maxplayers!}</h5>
                         <h5>当前持有人：${bg.currentUser!}</h5>
                         <#if "${bg.status!''}" != "众筹中">
-                        <h5>购买时间：${bg.buytime!}</h5>
+                        <h5>购买时间：${(bg.buytime?string("yyyy-MM-dd"))!}</h5>
                         <h5>购买金额：${bg.money!}</h5>
                         </#if>
                        <h5> 发起时间：${(bg.applicantiontime?string("yyyy-MM-dd"))!}</h5>
@@ -47,7 +47,7 @@
                                 <h5>评分</h5>
                             </div>
                             <div class="col-sm-3">
-                                <span id="">20</span>
+                                <span id="followSpan">${followNum!""}</span>
                                 <h5>关注</h5>
                             </div>
                             <div class="col-sm-3">
@@ -62,20 +62,21 @@
                         <div class="user-button">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i>借</button>
+                                    <button type="button" class="btn btn-w-m btn-block"><i class="fa fa-coffee"></i>借</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i>关注</button>
+                                    <button type="button" onclick="followOrCancel()" class="btn btn-w-m <#if followFlag> btn-danger<#else> btn-primary</#if>" id="BtnFollow" ><#if followFlag> 取消关注<#else> 关注</#if></button>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i>流浪图</button>
+                                    <button type="button" class="btn btn-w-m btn-block"><i class="fa fa-coffee"></i>流浪图</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i>评分</button>
+                                    <button type="button" class="btn btn-w-m btn-block"><i class="fa fa-coffee"></i>评分</button>
                                 </div>
                             </div>
+                            <button>众筹</button>
                         </div>
                     </div>
                 </div>
@@ -205,23 +206,49 @@
 </div>
 
 <!-- 全局js -->
-<script src="js/jquery.min.js?v=2.1.4"></script>
-<script src="js/bootstrap.min.js?v=3.3.6"></script>
-
-
-
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
 <!-- 自定义js -->
-<script src="js/content.js?v=1.0.0"></script>
-
-
+<script src="/js/content.js?v=1.0.0"></script>
+<!-- layer javascript -->
+<script src="/js/plugins/layer/layer.min.js"></script>
 <!-- Peity -->
-<script src="js/plugins/peity/jquery.peity.min.js"></script>
-
+<script src="/js/plugins/peity/jquery.peity.min.js"></script>
 <!-- Peity -->
-<script src="js/demo/peity-demo.js"></script>
+<script src="/js/demo/peity-demo.js"></script>
 
-<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
-<!--统计代码，可删除-->
+<script>
+    var followFlag = ${followFlag?c};
+    var uuid = '${bg.uuid!}';
+    var followNum = ${followNum!0};
+    function followOrCancel(){
+        $.post("/boardGame/followOrCancel",{followFlag:followFlag,uuid:uuid},function (data) {
+            layer.msg(data.msg);
+            if(data.status==1){
+                if(followFlag){
+                    //由关注到取消
+                    followNum--;
+                    followFlag = false;
+                    $("#BtnFollow").text("关注");
+                    $("#BtnFollow").removeClass(" btn-danger");
+                    $("#BtnFollow").addClass("btn-primary");
+                    $("#followSpan").text(followNum);
+                }else {
+                    //由取消到关注
+                    followNum++;
+                    followFlag = true;
+                    $("#BtnFollow").text("取消关注");
+                    $("#BtnFollow").addClass(" btn-danger");
+                    $("#BtnFollow").removeClass("btn-primary");
+                    $("#followSpan").text(followNum);
+
+                }
+            }
+        })
+
+    }
+
+</script>
 
 </body>
 

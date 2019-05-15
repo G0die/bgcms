@@ -30,6 +30,12 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-8">
+                <textarea id="remark" name="remark" class="form-control" required="" aria-required="true"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-sm-3 control-label">类型：</label>
             <div class="col-sm-9">
                 <label class="radio-inline">

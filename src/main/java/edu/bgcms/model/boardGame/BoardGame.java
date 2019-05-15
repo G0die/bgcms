@@ -1,4 +1,4 @@
-package edu.bgcms.model;
+package edu.bgcms.model.boardGame;
 
 import java.util.Date;
 

@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-xs-8 text-right">
                         <span >  </span>
-                        <h2 class="font-bold">当前余额 &nbsp;:&nbsp; ¥ 4,232</h2>
+                        <h2 class="font-bold" id="hMoney"></h2>
                     </div>
 
                 </div>
@@ -79,7 +79,9 @@
         </div>
     </div>
     <div class="row">
-        <button type="button" class="btn btn-w-m btn-white" style="margin-left: 15px;" onclick="toAdd()">添加账单</button>
+        <button type="button" class="btn btn-w-m btn-white" style="margin-left: 15px;" onclick="toAdd()">
+            <span class="glyphicon glyphicon-plus">添加账单
+        </button>
     </div>
 </div>
 <!-- 全局js -->
@@ -110,11 +112,20 @@
             layer.msg(data.msg);
             if(data.status == 1){
                 layer.closeAll();
+                window.location.reload();
             }
         })
     }
 
+    function getSurplus(){
+        $.post("/bill/getSurplus",function(data){
+            $("#hMoney").empty();
+            $("#hMoney").html("当前余额: &nbsp;:&nbsp; ¥ "+data.toFixed(2))
+
+        })
+    }
     $(document).ready(function () {
+        getSurplus();
         $('.footable').footable();
         $('.footable2').footable();
 
@@ -155,6 +166,12 @@
                 <input type="text" name="dotime" id="dotime" class="form-control" >
                 <span class="help-block m-b-none"> </span>
 
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">备注：</label>
+            <div class="col-sm-8">
+                <textarea id="remark" name="remark" class="form-control" required="" aria-required="true" style="width: 472px;"></textarea>
             </div>
         </div>
         <div class="form-group">

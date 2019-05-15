@@ -1,19 +1,22 @@
 package edu.bgcms.controller;
 
+import edu.bgcms.dao.TestMapper;
+import edu.bgcms.model.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class HelloFtl {
-    @RequestMapping("/hello")
-    public String hello(Map<String,Object> map){
-        map.put("name", "[Angel -- 守护天使]");
-        return "freemarker";
+    @Autowired
+    private TestMapper testMapper;
+    @ResponseBody
+    @RequestMapping("/test")
+    public List<Test> hello(Map<String,Object> map){
+        return testMapper.selectSurplus();
     }
 }
