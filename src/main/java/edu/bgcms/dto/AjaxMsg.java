@@ -8,5 +8,5 @@ import lombok.Setter;
 public class AjaxMsg {
     private int status;
     private String msg;
-    private Object date;
+    private Object data;
 }

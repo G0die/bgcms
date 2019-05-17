@@ -1,9 +1,6 @@
 package edu.bgcms.dao;
 
 import edu.bgcms.model.Test;
-import org.apache.ibatis.annotations.Select;
-
-import java.util.List;
 
 public interface TestMapper {
     int deleteByPrimaryKey(Integer id);
@@ -17,7 +14,4 @@ public interface TestMapper {
     int updateByPrimaryKeySelective(Test record);
 
     int updateByPrimaryKey(Test record);
-
-    @Select("SELECT * FROM `test`")
-    List<Test> selectSurplus();
 }

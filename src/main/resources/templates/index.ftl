@@ -116,6 +116,14 @@
 						</li>
 					</ul>
 				</li>
+				<#--账单-->
+				<li>
+					<a href="#"><i class="fa fa-table"></i> <span class="nav-label">公告通知</span><span class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li><a class="J_menuItem" href="/notice/index">通知列表</a></li>
+						<li><a class="J_menuItem" href="/notice/addView">发布通知</a></li>
+					</ul>
+				</li>
 				<li>
 					<a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">信箱 </span><span class="label label-warning pull-right">16</span></a>
 					<ul class="nav nav-second-level">

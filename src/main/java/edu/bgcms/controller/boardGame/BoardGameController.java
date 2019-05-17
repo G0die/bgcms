@@ -80,7 +80,7 @@ public class BoardGameController {
 
     @ResponseBody
     @RequestMapping(value = "/getList", produces = "application/json;charset=UTF-8")
-    public String getList(String keyWord, Model model) {
+    public String getList() {
         //调用service方法
         List<BoardGame> list = boardGameService.getList();
         JSONArray array = JSONArray.parseArray(JSON.toJSONString(list));
@@ -97,6 +97,14 @@ public class BoardGameController {
     public List<BoardGame> test() {
         //调用service方法
         List<BoardGame> list = boardGameService.getList();
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getNameList")
+    public List<BoardGame> getNameList() {
+        //调用service方法
+        List<BoardGame> list = boardGameMapper.selectNameAll();
         return list;
     }
 

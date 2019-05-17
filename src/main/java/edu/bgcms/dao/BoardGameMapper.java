@@ -17,6 +17,10 @@ public interface BoardGameMapper {
     int updateByPrimaryKeySelective(BoardGame record);
 
     int updateByPrimaryKey(BoardGame record);
+    //----------------------
     @Select("SELECT * FROM `boardgame` ORDER BY stars DESC,views DESC")
     public List<BoardGame> selectAll();
+
+    @Select("SELECT uuid,name FROM `boardgame` ORDER BY stars DESC,views DESC")
+    public List<BoardGame> selectNameAll();
 }

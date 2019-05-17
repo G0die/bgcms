@@ -1,6 +1,6 @@
 user（uuid，username，account，pwd，roler，experience，phone，mail，major，year，motto格言，messageNumeber,deny）
 bill(uuid,title,attachment,remark,amount消费金额,surplus余额,applicant,createtime)
-notice（uuid，title，content，creater，createtime,attachment）
+notice（uuid，title，bg_uuid,content，creater，createtime,attachment）
 attachment(uuid,name,path)
 boardgame(uuid,name,information,buytime,money,applicant申请人,applicantiontime,currentUser，status，views)
 //桌游状态0
