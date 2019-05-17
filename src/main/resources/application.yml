@@ -45,6 +45,8 @@ mybatis:
   configuration:
     #控制台打印sql
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#mapper:
+#  simpleTypes: java.time.LocalDateTime
 
 
 
