@@ -83,123 +83,150 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>最新动态</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="profile.html#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="profile.html#">选项1</a>
-                            </li>
-                            <li><a href="profile.html#">选项2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
+            <div class="ibox ">
+                <div class="ibox-content text-center">
+                    <h3 class="m-b-xxs">社交示例 02</h3>
                 </div>
-                <div class="ibox-content">
+            </div>
+            <div class="media-body">
+                <textarea class="form-control" placeholder="填写评论..."></textarea>
+            </div>
 
-                    <div>
-                        <div class="feed-activity-list">
 
-                            <div class="feed-element">
-                                <a href="profile.html#" class="pull-left">
-                                    <img alt="image" class="img-circle" src="/img/a1.jpg">
+            <div class="social-feed-separated">
+
+                <div class="social-avatar">
+                    <a href="">
+                        <img alt="image" src="/img/a5.jpg">
+                    </a>
+                </div>
+
+                <div class="social-feed-box">
+
+                    <div class="pull-right social-action dropdown">
+                        <button data-toggle="dropdown" class="dropdown-toggle btn-white">
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu m-t-xs">
+                            <li><a href="#">设置</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="social-avatar">
+                        <a href="#">
+                            尤小右
+                        </a>
+                        <small class="text-muted">8月18日</small>
+                    </div>
+                    <div class="social-body">
+                        <p>
+                            新技术新概念很多，而且有了新定律：前端开发每18月会难一倍
+                        </p>
+                        <img src="img/p2.jpg" class="img-responsive">
+                        <div class="btn-group">
+                            <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> 赞</button>
+                            <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> 评论</button>
+                            <button class="btn btn-white btn-xs"><i class="fa fa-share"></i> 分享</button>
+                        </div>
+                    </div>
+                    <div class="social-footer">
+                        <div class="social-comment">
+                            <a href="" class="pull-left">
+                                <img alt="image" src="img/a3.jpg">
+                            </a>
+                            <div class="media-body">
+                                <a href="#">
+                                    尤小右
+                                </a> 图表展示、数据可视化是前端领域一个麻烦且重要的事情，这里推荐了11个JS图表库，各取所需吧
+                                <br/>
+                                <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26</a> -
+                                <small class="text-muted">8月18日</small>
+                                <span class="glyphicon glyphicon-comment" style="float: right"></span>
+                            </div>
+                        </div>
+
+                        <div class="social-comment">
+                            <a href="" class="pull-left">
+                                <img alt="image" src="img/a4.jpg">
+                            </a>
+                            <div class="media-body">
+                                <a href="#">
+                                    尤小右
+                                </a> 看上去不错，如能结合乐曲播放有个动效就更酷了 :z
+                                <br/>
+                                <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11</a> -
+                                <small class="text-muted">8月18日</small>
+                            </div>
+
+                            <div class="social-comment">
+                                <a href="" class="pull-left">
+                                    <img alt="image" src="img/a7.jpg">
                                 </a>
-                                <div class="media-body ">
-                                    <small class="pull-right text-navy">1天前</small>
-                                    <strong>奔波儿灞</strong> 关注了 <strong>灞波儿奔</strong>.
-                                    <br>
-                                    <small class="text-muted">54分钟前 来自 皮皮时光机</small>
-                                    <div class="actions">
-                                        <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
-                                        <a class="btn btn-xs btn-danger"><i class="fa fa-heart"></i> 收藏</a>
-                                    </div>
+                                <div class="media-body">
+                                    <a href="#">
+                                        尤小右
+                                    </a> 用checkbox + CSS 也能玩出来很多花样，来看看这些有趣的例子吧！
+                                    <br/>
+                                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11</a> -
+                                    <small class="text-muted">8月18日</small>
                                 </div>
                             </div>
 
-                            <div class="feed-element">
-                                <a href="profile.html#" class="pull-left">
-                                    <img alt="image" class="img-circle" src="/img/profile.jpg">
+                            <div class="social-comment">
+                                <a href="" class="pull-left">
+                                    <img alt="image" src="img/a8.jpg">
                                 </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">5分钟前</small>
-                                    <strong>作家崔成浩</strong> 发布了一篇文章
-                                    <br>
-                                    <small class="text-muted">今天 10:20 来自 iPhone 6 Plus</small>
-
-                                </div>
-                            </div>
-
-                            <div class="feed-element">
-                                <a href="profile.html#" class="pull-left">
-                                    <img alt="image" class="img-circle" src="/img/a2.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">2小时前</small>
-                                    <strong>作家崔成浩</strong> 抽奖中了20万
-                                    <br>
-                                    <small class="text-muted">今天 09:27 来自 Koryolink iPhone</small>
-                                    <div class="well">
-                                        抽奖，人民币2000元，从转发这个微博的粉丝中抽取一人。11月16日平台开奖。随手一转，万一中了呢？
-                                    </div>
-                                    <div class="pull-right">
-                                        <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
-                                        <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i> 收藏</a>
-                                        <a class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> 评论</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="feed-element">
-                                <a href="profile.html#" class="pull-left">
-                                    <img alt="image" class="img-circle" src="/img/a3.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right">2天前</small>
-                                    <strong>天猫</strong> 上传了2张图片
-                                    <br>
-                                    <small class="text-muted">11月7日 11:56 来自 微博 weibo.com</small>
-                                    <div class="photos">
-                                        <a target="_blank" href="http://24.media.tumblr.com/20a9c501846f50c1271210639987000f/tumblr_n4vje69pJm1st5lhmo1_1280.jpg">
-                                            <img alt="image" class="feed-photo" src="/img/p1.jpg">
-                                        </a>
-                                        <a target="_blank" href="http://37.media.tumblr.com/9afe602b3e624aff6681b0b51f5a062b/tumblr_n4ef69szs71st5lhmo1_1280.jpg">
-                                            <img alt="image" class="feed-photo" src="/img/p3.jpg">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="feed-element">
-                                <a href="profile.html#" class="pull-left">
-                                    <img alt="image" class="img-circle" src="/img/a4.jpg">
-                                </a>
-                                <div class="media-body ">
-                                    <small class="pull-right text-navy">5小时前</small>
-                                    <strong>在水一方Y</strong> 关注了 <strong>那二十年的单身</strong>.
-                                    <br>
-                                    <small class="text-muted">今天 10:39 来自 iPhone客户端</small>
-                                    <div class="actions">
-                                        <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
-                                        <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i> 收藏</a>
-                                    </div>
+                                <div class="media-body">
+                                    <textarea class="form-control" placeholder="填写评论..."></textarea>
                                 </div>
                             </div>
 
                         </div>
 
-                        <button class="btn btn-primary btn-block m"><i class="fa fa-arrow-down"></i> 显示更多</button>
+                        <div class="social-comment">
+                            <a href="" class="pull-left">
+                                <img alt="image" src="img/a6.jpg">
+                            </a>
+                            <div class="media-body">
+                                <a href="#">
+                                    尤小右
+                                </a> 有情怀的工程师，赞。
+                                <br/>
+                                <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26</a> -
+                                <small class="text-muted">8月18日</small>
+                            </div>
+                        </div>
+
+                        <div class="social-comment">
+                            <a href="" class="pull-left">
+                                <img alt="image" src="img/a7.jpg">
+                            </a>
+                            <div class="media-body">
+                                <a href="#">
+                                    尤小右
+                                </a> 几位同学中奖，请将你们的收获地址电话姓名私信给我哦~
+                                <br/>
+                                <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26</a> -
+                                <small class="text-muted">8月18日</small>
+                            </div>
+                        </div>
+
+                        <div class="social-comment">
+                            <a href="" class="pull-left">
+                                <img alt="image" src="img/a3.jpg">
+                            </a>
+                            <div class="media-body">
+                                <textarea class="form-control" placeholder="填写评论..."></textarea>
+                            </div>
+                        </div>
 
                     </div>
 
                 </div>
+
             </div>
+
+
 
         </div>
     </div>
@@ -246,6 +273,30 @@
             }
         })
 
+    }
+
+    function getComments(){
+        $.post("/commment/getCommentList",{objId:uuid},function (data) {
+            if(data.status==1){
+
+
+            }else {
+                layer.msg(data.msg);
+            }
+        })
+
+    }
+    function getCommentBodyHtml(data) {
+        var html = '';
+        for (var i = 0;i<data.length;i++){
+            html += ''
+        }
+        return html
+    }
+    function getCommentHtml(data,grade,html) {
+        for (var i = 0;i<data.length;i++){
+
+        }
     }
 
 </script>

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+
 @Getter
 @Setter
 public class Notice {
@@ -18,7 +20,7 @@ public class Notice {
 
     private String creator;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
-    private LocalDateTime createtime;
+    private Date createtime;
 
     private String attachmant;
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -50,7 +51,7 @@ public class NoticeController {
         AjaxMsg ajaxMsg =  new AjaxMsg();
         notice.setUuid(MyTools.getUUID());
         notice.setCreator(MyTools.getCurUser().getUuid());
-        notice.setCreatetime(LocalDateTime.now());
+        notice.setCreatetime(new Date());
         try{
             int num = noticeMapper.insert(notice);
         }catch (Exception e){

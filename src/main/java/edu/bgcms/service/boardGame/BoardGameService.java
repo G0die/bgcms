@@ -19,4 +19,9 @@ public class BoardGameService {
         List<BoardGame> list=boardGameMapper.selectAll();
         return list;
     }
+    public void addViews( BoardGame bg) {
+        bg.setViews(bg.getViews()+1);
+        boardGameMapper.updateByPrimaryKey(bg);
+    }
+
 }

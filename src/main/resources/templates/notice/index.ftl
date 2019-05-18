@@ -50,7 +50,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group col-sm-12" style="    margin-left: -140px;margin-right: 70px;">
+                                <div class="form-group col-sm-12" style="    margin-left: -119px;margin-right: 70px;">
                                     <label class="col-sm-2 control-label">内容</label>
 
                                     <div class="col-sm-10">
@@ -65,7 +65,7 @@
                                         class="fa fa-check"></i>&nbsp;提交
                             </button>
                         </div>
-                        <div class="ibox-content" id="ibox-content">
+                        <div class="ibox-content" id="ibox-content" style="background-color: #F5F5F5;">
 
                             <div id="vertical-timeline" class="vertical-container light-timeline">
 
@@ -106,12 +106,13 @@
 
     function save() {
         $.post("/notice/save", $('#addForm').serialize(), function (data) {
-            layer.message(data.msg)
+            layer.msg(data.msg);
             if (data.status == 1) {
                 //刷新列表
                 //清空表单
-                $('#title').val();
-                $('#content').val();
+                $('#title').val("");
+                $('#content').val("");
+                initList();
             }
         })
     }
@@ -152,7 +153,7 @@
                 $("#vertical-timeline").empty();
                 $("#vertical-timeline").html(html);
             } else {
-                layer.message(data.msg)
+                layer.msg(data.msg);
             }
         })
     }

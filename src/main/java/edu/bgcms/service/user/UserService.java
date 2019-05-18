@@ -33,7 +33,7 @@ public class UserService {
     public List<User> getList(String keyWord) {
         UserExample userExample = new UserExample();
         if(!StringHelper.isNullOrEmptyString(keyWord)){
-            userExample.createCriteria().andUsernameLike(keyWord);
+            userExample.createCriteria().andUsernameLike("%"+keyWord+"%");
         }
         List<User> list=userMapper.selectByExample(userExample);
         return list;

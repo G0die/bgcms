@@ -18,8 +18,9 @@ public interface NoticeMapper {
 
     int updateByPrimaryKey(Notice record);
     //----------------------
-    @Select("SELECT * FROM notice WHERE " +
-            "bg_uuid = '0' or " +
-            "(bg_uuid = (SELECT bg_uuid FROM `user_f_bg` WHERE user_uuid = #{uuid}))")
+    @Select("SELECT `uuid`, `title`, `bg_uuid`, `content`, (SELECT username FROM `user` WHERE `user`.uuid =notice.creator) as creator, `createtime`, `attachmant` " +
+            "FROM notice " +
+            "WHERE bg_uuid = '0' or " +
+            "(bg_uuid in (SELECT bg_uuid FROM `user_f_bg` WHERE user_uuid = #{uuid})) ORDER BY createtime DESC")
     List<Notice> selectSeeList(String uuid);
 }

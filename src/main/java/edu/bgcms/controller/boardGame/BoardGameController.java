@@ -10,11 +10,13 @@ import edu.bgcms.model.boardGame.UserFBg;
 import edu.bgcms.service.boardGame.BoardGameService;
 import edu.bgcms.utils.MyTools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +38,14 @@ public class BoardGameController {
     }
 
     @RequestMapping("/details")
-    public String toDeetails(Model model, String uuid) {
+    public String toDeetails(Model model, String uuid, HttpServletRequest request) {
         BoardGame bg = boardGameMapper.selectByPrimaryKey(uuid);
+        Object bgViews = request.getSession().getAttribute("bgViews");
+        //添加浏览次数
+        if(bgViews == null){
+            request.getSession().setAttribute("bgViews",1);
+            boardGameService.addViews(bg);
+        }
         List<String> follwPerson = userFBgMapper.selectFollowNum(uuid);
         boolean followFlag = false;
         if (follwPerson.size() > 0) {
