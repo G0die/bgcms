@@ -83,151 +83,20 @@
             </div>
         </div>
         <div class="col-sm-8">
+            <#--标题-->
             <div class="ibox ">
                 <div class="ibox-content text-center">
-                    <h3 class="m-b-xxs">社交示例 02</h3>
+                    <h3 class="m-b-xxs">最新动态</h3>
                 </div>
             </div>
+            <#--发布框-->
             <div class="media-body">
-                <textarea class="form-control" placeholder="填写评论..."></textarea>
+                <textarea class="form-control" id="contentInput" placeholder="填写评论..."></textarea>
+                <button style="float: right;" onclick="comment()"> 发布</button>
             </div>
 
-
-            <div class="social-feed-separated">
-
-                <div class="social-avatar">
-                    <a href="">
-                        <img alt="image" src="/img/a5.jpg">
-                    </a>
-                </div>
-
-                <div class="social-feed-box">
-
-                    <div class="pull-right social-action dropdown">
-                        <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                            <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu m-t-xs">
-                            <li><a href="#">设置</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="social-avatar">
-                        <a href="#">
-                            尤小右
-                        </a>
-                        <small class="text-muted">8月18日</small>
-                    </div>
-                    <div class="social-body">
-                        <p>
-                            新技术新概念很多，而且有了新定律：前端开发每18月会难一倍
-                        </p>
-                        <img src="img/p2.jpg" class="img-responsive">
-                        <div class="btn-group">
-                            <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> 赞</button>
-                            <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> 评论</button>
-                            <button class="btn btn-white btn-xs"><i class="fa fa-share"></i> 分享</button>
-                        </div>
-                    </div>
-                    <div class="social-footer">
-                        <div class="social-comment">
-                            <a href="" class="pull-left">
-                                <img alt="image" src="img/a3.jpg">
-                            </a>
-                            <div class="media-body">
-                                <a href="#">
-                                    尤小右
-                                </a> 图表展示、数据可视化是前端领域一个麻烦且重要的事情，这里推荐了11个JS图表库，各取所需吧
-                                <br/>
-                                <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26</a> -
-                                <small class="text-muted">8月18日</small>
-                                <span class="glyphicon glyphicon-comment" style="float: right"></span>
-                            </div>
-                        </div>
-
-                        <div class="social-comment">
-                            <a href="" class="pull-left">
-                                <img alt="image" src="img/a4.jpg">
-                            </a>
-                            <div class="media-body">
-                                <a href="#">
-                                    尤小右
-                                </a> 看上去不错，如能结合乐曲播放有个动效就更酷了 :z
-                                <br/>
-                                <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11</a> -
-                                <small class="text-muted">8月18日</small>
-                            </div>
-
-                            <div class="social-comment">
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="img/a7.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#">
-                                        尤小右
-                                    </a> 用checkbox + CSS 也能玩出来很多花样，来看看这些有趣的例子吧！
-                                    <br/>
-                                    <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11</a> -
-                                    <small class="text-muted">8月18日</small>
-                                </div>
-                            </div>
-
-                            <div class="social-comment">
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="img/a8.jpg">
-                                </a>
-                                <div class="media-body">
-                                    <textarea class="form-control" placeholder="填写评论..."></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="social-comment">
-                            <a href="" class="pull-left">
-                                <img alt="image" src="img/a6.jpg">
-                            </a>
-                            <div class="media-body">
-                                <a href="#">
-                                    尤小右
-                                </a> 有情怀的工程师，赞。
-                                <br/>
-                                <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26</a> -
-                                <small class="text-muted">8月18日</small>
-                            </div>
-                        </div>
-
-                        <div class="social-comment">
-                            <a href="" class="pull-left">
-                                <img alt="image" src="img/a7.jpg">
-                            </a>
-                            <div class="media-body">
-                                <a href="#">
-                                    尤小右
-                                </a> 几位同学中奖，请将你们的收获地址电话姓名私信给我哦~
-                                <br/>
-                                <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26</a> -
-                                <small class="text-muted">8月18日</small>
-                            </div>
-                        </div>
-
-                        <div class="social-comment">
-                            <a href="" class="pull-left">
-                                <img alt="image" src="img/a3.jpg">
-                            </a>
-                            <div class="media-body">
-                                <textarea class="form-control" placeholder="填写评论..."></textarea>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
+            <div class="social-feed-separated" id="commentList">
             </div>
-
-
-
         </div>
     </div>
 </div>
@@ -274,12 +143,22 @@
         })
 
     }
-
-    function getComments(){
-        $.post("/commment/getCommentList",{objId:uuid},function (data) {
+    function comment(){
+        var content = $("#contentInput").val();
+        $.post("/comment/sendComment",{objId:uuid,content:content},function (data) {
+            layer.msg(data.msg);
             if(data.status==1){
-
-
+                getComments();
+                $("#contentInput").val("");
+            }
+        })
+    }
+    function getComments(){
+        $.post("/comment/getCommentList",{objId:uuid},function (data) {
+            if(data.status==1){
+                var html = getCommentBodyHtml(data.data)
+                $("#commentList").empty();
+                $("#commentList").html(html);
             }else {
                 layer.msg(data.msg);
             }
@@ -289,14 +168,130 @@
     function getCommentBodyHtml(data) {
         var html = '';
         for (var i = 0;i<data.length;i++){
-            html += ''
+            html += '';
+            // 头像
+            html += '<div class="social-avatar"><a href=""><img alt="image" src="/img/a5.jpg"></a></div>';
+            html += '<div class="social-feed-box">';
+
+            html += '<div class="pull-right social-action dropdown"><button data-toggle="dropdown" class="dropdown-toggle btn-white"> <i class="fa fa-angle-down"></i></button>';
+            //删除
+            html += '<ul class="dropdown-menu m-t-xs"><li><a href="#">删除</a></li></ul></div>';
+            // 发布人+时间
+            html += '<div class="social-avatar"><a href="#">'+data[i].fromUserName+'&nbsp;</a><small class="text-muted">'+data[i].createTime+'</small></div>';
+            //内容
+            html += '<div class="social-body"> <p>'+data[i].content+'</p>';
+            //图片
+            // html += '<img src="/img/p2.jpg" class="img-responsive">';
+            // 赞,评论,分享按钮
+            html += '<div class="btn-group">' +
+                        '<button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> 赞</button>' +
+                        '<button class="btn btn-white btn-xs" onclick="showComInput(this)"><i class="fa fa-comments" ></i> 评论</button>' +
+                        '<button class="btn btn-white btn-xs"><i class="fa fa-share"></i> 分享</button>' +
+                      '</div></div>';
+            html += '<div class="social-footer">';
+            //评论及子评论
+            if(data[i].nextData!=null&&data[i].nextData.length>0){
+                var temp = getCommentHtml(data[i].nextData);
+                html += temp;
+            }
+            //评论框
+            html += '<div class="social-comment" style="display: none">' +
+                        '<a href="" class="pull-left">' +
+                            '<img alt="image" src="/img/a8.jpg">' +
+                        '</a>' +
+                        '<div class="media-body">' +
+                            '<textarea class="form-control" placeholder="填写评论..."></textarea>' +
+                            '<button style="float: right;" onclick="reply(1,\''+data[i].fromUserId+'\',\''+data[i].uuid+'\',this)"> 发布</button>' +
+                        '</div>' +
+                    '</div>';
+
+            html += '</div>';
+            html += '</div>';
         }
         return html
     }
-    function getCommentHtml(data,grade,html) {
+    function getCommentHtml(data) {
+        var html = '';
         for (var i = 0;i<data.length;i++){
+            //头像
+            html += '<div class="social-comment">' +
+                        '<a href="" class="pull-left">' +
+                          '<img alt="image" src="/img/a3.jpg">' +
+                        '</a>';
 
+            html += '<div class="media-body">';
+            //作者和内容
+            html += '<a href="#"> '+data[i].fromUserName+'</a>'+data[i].content+'';
+            if (data[i].grade != 2){
+                //评论按钮
+                html += '<span class="fa fa-comments" style="float: right" onclick="showReplyInput(this,\''+data[i].grade+'\',\''+data[i].fromUserId+'\',\''+data[i].uuid+'\')"></span>';
+            }
+            html += '<br/>';
+            // 点赞数量
+            html += '<a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26</a> -';
+            //发布时间
+            html += '<small class="text-muted">'+data[i].createTime+'</small>';
+
+            html += '</div>';
+            if(data[i].nextData!=null&&data[i].nextData.length>0){
+                html += getCommentHtml(data[i].nextData);
+            }
+            if(data[i].grade != 2){
+                //评论框
+                html += '<div class="social-comment" style="display: none">' +
+                            '<a href="" class="pull-left">' +
+                                '<img alt="image" src="/img/a8.jpg">' +
+                            '</a>' +
+                            '<div class="media-body">' +
+                                '<textarea class="form-control" placeholder="填写评论..."></textarea>' +
+                                '<input type="hidden" class="lastId">' +
+                                '<input type="hidden" class="toUserId">' +
+                                '<button style="float: right;" onclick="reply(2,null,null,this)"> 发布</button>' +
+                            '</div>' +
+                        '</div>';
+            }
+
+            html += '</div>';
         }
+        return html;
+    }
+    $(function () {
+        getComments();
+    })
+    function showComInput(obj) {
+        $(obj).parent().parent().parent().find(".social-comment").last().toggle();
+    }
+    function showReplyInput(obj,grade,toId,lastId) {
+        if(grade == 1){
+            $(obj).parent().parent().find(".social-comment").last().toggle();
+            $(obj).parent().parent().find(".social-comment").last().find(".lastId").val(lastId);
+            $(obj).parent().parent().find(".social-comment").last().find(".toUserId").val(toId);
+        }
+        if(grade == 2){
+            $(obj).parent().parent().parent().find(".social-comment").last().toggle();
+            $(obj).parent().parent().parent().find(".social-comment").last().find(".lastId").val(lastId);
+            $(obj).parent().parent().parent().find(".social-comment").last().find(".toUserId").val(toId);
+        }
+
+    }
+
+    function reply(grade,toUserId,lastId,obj) {
+        var content = $(obj).parent().find(".form-control").val();
+        if (toUserId == null ){
+            toUserId = $(obj).parent().find(".toUserId").val();
+        }
+        if (lastId == null ){
+            lastId = $(obj).parent().find(".lastId").val();
+        }
+        $.post("/comment/reply",{objId:uuid,content:content,grade:grade,toUserId:toUserId,lastId:lastId},function (data) {
+            layer.msg(data.msg);
+            if(data.status==1){
+                // console.log($.cookie('username').val());
+                $(obj).parent().find(".form-control").val("");
+                getComments();
+                // $(obj).parent().parent().before(html);
+            }
+        })
     }
 
 </script>

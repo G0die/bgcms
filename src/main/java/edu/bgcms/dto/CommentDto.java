@@ -27,4 +27,8 @@ public class CommentDto {
     private Date createTime;
 
     private String content;
+    private int likeFlag;
+    private String toUserName;
+
+    private String fromUserName;
 }

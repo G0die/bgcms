@@ -1,15 +1,11 @@
 package edu.bgcms.service.comment;
 
 import edu.bgcms.dao.CommentMapper;
-import edu.bgcms.dto.AjaxMsg;
 import edu.bgcms.dto.CommentDto;
-import edu.bgcms.model.comment.Comment;
+import edu.bgcms.model.comment.CommentLike;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,30 +18,37 @@ public class CommentService {
     CommentMapper commentMapper;
 
 
-    public void dataDeal(List<Comment> modes, List<CommentDto> dtos,int grade,String uuid) {
+    public void dataDeal(List<CommentLike> modes, List<CommentDto> dtos, int grade, String uuid) {
         //筛选0级
-        Iterator<Comment> it = modes.iterator();
+        Iterator<CommentLike> it = modes.iterator();
         while(it.hasNext()){
-            Comment mode = it.next();
+            CommentLike mode = it.next();
+            System.out.println(mode.getGrade()+"---"+mode.getContent());
             if(mode.getGrade()==grade&&mode.getLastId().equals(uuid)){
                 CommentDto dto = new CommentDto();
                 model2Dto(mode,dto);
-                it.remove();
+//                it.remove();
                 if(grade<3){
-                    dataDeal(modes,dtos,grade+1,mode.getUuid());
+                    List<CommentDto> nextData = new ArrayList<>();
+                    dataDeal(modes,nextData,grade+1,mode.getUuid());
+                    dto.setNextData(nextData);
                 }
                 dtos.add(dto);
             }
         }
     }
-    public void model2Dto(Comment mode, CommentDto dto) {
+
+    public void model2Dto(CommentLike mode, CommentDto dto) {
         dto.setUuid(mode.getUuid());
-        dto.setContent(mode.getUuid());
+        dto.setContent(mode.getContent());
         dto.setImgId(mode.getImgId());
         dto.setFromUserId(mode.getFromUserId());
         dto.setToUserId(mode.getToUserId());
         dto.setObjId(mode.getObjId());
         dto.setGrade(mode.getGrade());
         dto.setCreateTime(mode.getCreateTime());
+        dto.setLikeFlag(mode.getLikeFlag());
+        dto.setFromUserName(mode.getFromUserName());
+        dto.setToUserName(mode.getToUserName());
     }
 }

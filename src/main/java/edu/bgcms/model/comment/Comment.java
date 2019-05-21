@@ -17,7 +17,7 @@ public class Comment {
     private String fromUserId;
 
     private String objId;
-
+//0表示无
     private String lastId;
 
     private Integer grade;

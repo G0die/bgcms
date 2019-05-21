@@ -1,6 +1,7 @@
 package edu.bgcms.dao;
 
 import edu.bgcms.model.comment.Comment;
+import edu.bgcms.model.comment.CommentLike;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -22,11 +23,11 @@ public interface CommentMapper {
     int updateByPrimaryKey(Comment record);
     //-----------------
 
-    @Select("SELECT c.`uuid`, `content`, `img_id`, c.`obj_id`, `last_id`, `grade`, `create_time`, IFNULL(l.flag,0)" +
-            "(SELECT username FROM `user` WHERE uuid = to_user_id  ) as`to_user_id`," +
-            " (SELECT username FROM `user` WHERE uuid = from_user_id ) as `from_user_id` " +
-            "FROM `comment` AS c LEFT JOIN `like` AS l ON c.uuid =l.obj_id  " +
-            "WHERE c.obj_id = #{obj} AND l.user_id = #{user}")
-    List<Comment> selectListByObjId(Map param);
+    @Select("SELECT c.*, IFNULL(l.flag,0) as likeFlag," +
+            "(SELECT username FROM `user` as a WHERE a.uuid = c.to_user_id  ) as`to_user_name`," +
+            " (SELECT username FROM `user` as b WHERE b.uuid = c.from_user_id ) as `from_user_name` " +
+            "FROM `comment` AS c LEFT JOIN `like` AS l ON c.uuid =l.obj_id AND l.user_id = #{user} " +
+            "WHERE c.obj_id = #{obj} ORDER BY c.create_time Desc")
+    List<CommentLike> selectListByObjId(Map param);
 
 }
