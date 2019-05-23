@@ -100,7 +100,7 @@
         layer.open({
             type: 1//Page层类型
             ,area: ['700px', '300px']
-            ,title: '添加账单。'
+            ,title: '添加账单'
             ,shade: 0.6 //遮罩透明度
             ,maxmin: true //允许全屏最小化
             ,anim: 1 //0-6的动画形式，-1不开启
@@ -132,16 +132,6 @@
     });
 </script>
 
-<script>
-    //执行一个laydate实例
-    laydate.render({
-        elem: '#dotime' //指定元素
-        ,trigger: 'click'
-        ,change: function(value, date, endDate){
-            alert(value);
-        }
-    });
-</script>
 </body>
 <div class="col-md-12" id="alertDiv" style="display: none">
     <form id="addBill">

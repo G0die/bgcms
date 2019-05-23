@@ -124,6 +124,13 @@
 						<li><a class="J_menuItem" href="/notice/addView">发布通知</a></li>
 					</ul>
 				</li>
+				<#--账单-->
+				<li>
+					<a href="#"><i class="fa fa-table"></i> <span class="nav-label">权限管理</span><span class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<li><a class="J_menuItem" href="/permission/rolerList">权限管理</a></li>
+					</ul>
+				</li>
 				<li>
 					<a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">信箱 </span><span class="label label-warning pull-right">16</span></a>
 					<ul class="nav nav-second-level">
@@ -495,7 +502,7 @@
 			<iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_v1.html?v=4.0" frameborder="0" data-id="index_v1.html" seamless></iframe>
 		</div>
 		<div class="footer">
-			<div class="pull-right">&copy; 2014-2015 <a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>
+			<div class="pull-right">&copy; 友情链接 <a href="http://www.baidu.com/" target="_blank">百度</a>
 			</div>
 		</div>
 	</div>

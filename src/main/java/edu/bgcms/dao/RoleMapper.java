@@ -17,7 +17,10 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
-
+//-----------------
     @Select("SELECT b.role FROM user_role as a LEFT JOIN role as b WHERE  a.role_id = b.id AND a.user_id = #{userId})")
     public List<String> selectByUser(String userId);
+
+    @Select("SELECT * from role where role != '管理员'")
+    List<Role> getAllRole();
 }

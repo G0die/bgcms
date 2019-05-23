@@ -31,3 +31,5 @@ category（uuid，nametablename,remark）桌游类别，附件类别，
 评论:向下删除
     输入框 两种字体
     定位:输入框
+
+权限:添加 过滤已经添加权限;
