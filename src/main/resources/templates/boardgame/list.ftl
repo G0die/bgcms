@@ -85,12 +85,13 @@
         });
     }
 
-    function add() {
-        $.post("/bill/add", $("#addBill").serialize(), function (data) {
+    function addBg() {
+        $.post("/boardGame/addBg", $("#addBgForm").serialize(), function (data) {
             layer.msg(data.msg);
             if (data.status == 1) {
                 layer.closeAll();
-                window.location.reload();
+                var dataUrl = "/crowdFunding/toPayView?orderId=" + data.data;
+                parent.addMenuTab(dataUrl, "阿里支付", dataUrl)
             }
         })
     }
@@ -236,7 +237,7 @@
 
 </body>
 <div class="col-md-12" id="alertDiv" style="display: none">
-    <form id="addBg">
+    <form id="addBgForm">
         <div class="form-group">
             <label class="col-sm-3 control-label">名字：</label>
             <div class="col-sm-9">
@@ -261,7 +262,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">金额：</label>
             <div class="col-sm-9">
-                <input type="text" name="`money" class="form-control" placeholder="请输入金额">
+                <input type="text" name="money" class="form-control" placeholder="请输入金额">
                 <span class="help-block m-b-none"> </span>
             </div>
         </div>
@@ -274,7 +275,7 @@
         </div>
     </form>
     <div style="float: right;margin-right: 15px; margin-top: 5px;">
-        <button class="btn btn-primary" onclick="add()" style="width: 82px;">保 存</button>
+        <button class="btn btn-primary" onclick="addBg()" style="width: 82px;">保 存</button>
     </div>
 </div>
 </html>

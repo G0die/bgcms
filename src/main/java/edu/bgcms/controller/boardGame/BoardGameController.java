@@ -3,20 +3,22 @@ package edu.bgcms.controller.boardGame;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import edu.bgcms.dao.BoardGameMapper;
+import edu.bgcms.dao.OrderMapper;
 import edu.bgcms.dao.UserFBgMapper;
 import edu.bgcms.dto.AjaxMsg;
 import edu.bgcms.model.boardGame.BoardGame;
 import edu.bgcms.model.boardGame.UserFBg;
+import edu.bgcms.model.order.Order;
 import edu.bgcms.service.boardGame.BoardGameService;
 import edu.bgcms.utils.MyTools;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +33,8 @@ public class BoardGameController {
     private BoardGameMapper boardGameMapper;
     @Autowired
     private UserFBgMapper userFBgMapper;
+    @Autowired
+    private OrderMapper orderMapper;
 
     @RequestMapping("/list")
     public String toList() {
@@ -114,6 +118,39 @@ public class BoardGameController {
         //调用service方法
         List<BoardGame> list = boardGameMapper.selectNameAll();
         return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/addBg")
+    public AjaxMsg addBg(BoardGame bg) {
+        AjaxMsg ajaxMsg = new AjaxMsg();
+        bg.setUuid(MyTools.getUUID());
+        bg.setApplicant(MyTools.getCurUser().getUuid());
+        bg.setStatus("仅保存");
+        bg.setCurrentuser(MyTools.getCurUser().getUuid());
+        try{
+           boardGameMapper.insert(bg);
+        }catch (Exception e){
+            e.printStackTrace();
+            ajaxMsg.setStatus(0);
+            ajaxMsg.setMsg("保存失败");
+            return ajaxMsg;
+        }
+        Order order = new Order();
+        order.setStatus("wait");
+        order.setBody("桌游众筹发起费用");
+        order.setCreateTime(new Date());
+        order.setObjId(bg.getUuid());
+        order.setOutTradeNo(MyTools.getUUID());
+        order.setTotalAmount(bg.getMoney()/2);
+        order.setSubject(bg.getName());
+        order.setUserId(MyTools.getCurUser().getUuid());
+        orderMapper.insert(order);
+
+        ajaxMsg.setStatus(1);
+        ajaxMsg.setMsg("保存成功");
+        ajaxMsg.setData(order.getUserId());
+        return ajaxMsg;
     }
 
 
