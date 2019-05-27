@@ -19,15 +19,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
+    from orders
     where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from order
+    delete from orders
     where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="edu.bgcms.model.order.Order">
-    insert into order (out_trade_no, total_amount, subject, 
+    insert into orders (out_trade_no, total_amount, subject, 
       body, obj_id, user_id, 
       alipay_id, create_time, status
       )
@@ -37,7 +37,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="edu.bgcms.model.order.Order">
-    insert into order
+    insert into orders
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="outTradeNo != null">
         out_trade_no,
@@ -98,7 +98,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="edu.bgcms.model.order.Order">
-    update order
+    update orders
     <set>
       <if test="totalAmount != null">
         total_amount = #{totalAmount,jdbcType=DOUBLE},
@@ -128,7 +128,7 @@
     where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="edu.bgcms.model.order.Order">
-    update order
+    update orders
     set total_amount = #{totalAmount,jdbcType=DOUBLE},
       subject = #{subject,jdbcType=VARCHAR},
       body = #{body,jdbcType=VARCHAR},

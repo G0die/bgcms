@@ -62,7 +62,7 @@
                         <div class="user-button">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-w-m btn-block"><i class="fa fa-coffee"></i>借</button>
+                                    <button type="button" class="btn btn-w-m btn-success" onclick="toBFView()">出借</button>
                                 </div>
                                 <div class="col-sm-6">
                                     <button type="button" onclick="followOrCancel()" class="btn btn-w-m <#if followFlag> btn-danger<#else> btn-primary</#if>" id="BtnFollow" ><#if followFlag> 取消关注<#else> 关注</#if></button>
@@ -117,6 +117,10 @@
     var followFlag = ${followFlag?c};
     var uuid = '${bg.uuid!}';
     var followNum = ${followNum!0};
+    function toBFView() {
+        var dataUrl = "/workflow/toForm?bgId=" + uuid;
+        parent.addMenuTab(dataUrl, "桌游出借申请表", dataUrl);
+    }
     function followOrCancel(){
         $.post("/boardGame/followOrCancel",{followFlag:followFlag,uuid:uuid},function (data) {
             layer.msg(data.msg);

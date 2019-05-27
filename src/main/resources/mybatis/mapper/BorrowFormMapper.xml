@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.bgcms.dao.BorrowFormMapper">
+  <resultMap id="BaseResultMap" type="edu.bgcms.model.workFlow.BorrowForm">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="bg_id" jdbcType="VARCHAR" property="bgId" />
+    <result column="cur_user" jdbcType="VARCHAR" property="curUser" />
+    <result column="applicant" jdbcType="VARCHAR" property="applicant" />
+    <result column="cur_step" jdbcType="INTEGER" property="curStep" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="edu.bgcms.model.workFlow.BorrowForm">
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uuid, bg_id, cur_user, applicant, cur_step, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from borrow_form
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from borrow_form
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="edu.bgcms.model.workFlow.BorrowForm">
+    insert into borrow_form (uuid, bg_id, cur_user, 
+      applicant, cur_step, create_time, 
+      remark)
+    values (#{uuid,jdbcType=VARCHAR}, #{bgId,jdbcType=VARCHAR}, #{curUser,jdbcType=VARCHAR}, 
+      #{applicant,jdbcType=VARCHAR}, #{curStep,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.bgcms.model.workFlow.BorrowForm">
+    insert into borrow_form
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="bgId != null">
+        bg_id,
+      </if>
+      <if test="curUser != null">
+        cur_user,
+      </if>
+      <if test="applicant != null">
+        applicant,
+      </if>
+      <if test="curStep != null">
+        cur_step,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="bgId != null">
+        #{bgId,jdbcType=VARCHAR},
+      </if>
+      <if test="curUser != null">
+        #{curUser,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null">
+        #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="curStep != null">
+        #{curStep,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.bgcms.model.workFlow.BorrowForm">
+    update borrow_form
+    <set>
+      <if test="bgId != null">
+        bg_id = #{bgId,jdbcType=VARCHAR},
+      </if>
+      <if test="curUser != null">
+        cur_user = #{curUser,jdbcType=VARCHAR},
+      </if>
+      <if test="applicant != null">
+        applicant = #{applicant,jdbcType=VARCHAR},
+      </if>
+      <if test="curStep != null">
+        cur_step = #{curStep,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="edu.bgcms.model.workFlow.BorrowForm">
+    update borrow_form
+    set bg_id = #{bgId,jdbcType=VARCHAR},
+      cur_user = #{curUser,jdbcType=VARCHAR},
+      applicant = #{applicant,jdbcType=VARCHAR},
+      cur_step = #{curStep,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.bgcms.model.workFlow.BorrowForm">
+    update borrow_form
+    set bg_id = #{bgId,jdbcType=VARCHAR},
+      cur_user = #{curUser,jdbcType=VARCHAR},
+      applicant = #{applicant,jdbcType=VARCHAR},
+      cur_step = #{curStep,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

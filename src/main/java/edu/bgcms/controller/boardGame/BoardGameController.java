@@ -44,10 +44,10 @@ public class BoardGameController {
     @RequestMapping("/details")
     public String toDeetails(Model model, String uuid, HttpServletRequest request) {
         BoardGame bg = boardGameMapper.selectByPrimaryKey(uuid);
-        Object bgViews = request.getSession().getAttribute("bgViews");
+        Object bgViews = request.getSession().getAttribute(uuid);
         //添加浏览次数
         if(bgViews == null){
-            request.getSession().setAttribute("bgViews",1);
+            request.getSession().setAttribute(uuid,1);
             boardGameService.addViews(bg);
         }
         List<String> follwPerson = userFBgMapper.selectFollowNum(uuid);
@@ -128,6 +128,11 @@ public class BoardGameController {
         bg.setApplicant(MyTools.getCurUser().getUuid());
         bg.setStatus("仅保存");
         bg.setCurrentuser(MyTools.getCurUser().getUuid());
+        bg.setViews(0);
+        bg.setLends(0);
+        bg.setStars(0);
+        bg.setRating(0);
+        bg.setApplicantiontime(new Date());
         try{
            boardGameMapper.insert(bg);
         }catch (Exception e){
@@ -149,7 +154,7 @@ public class BoardGameController {
 
         ajaxMsg.setStatus(1);
         ajaxMsg.setMsg("保存成功");
-        ajaxMsg.setData(order.getUserId());
+        ajaxMsg.setData(order.getOutTradeNo());
         return ajaxMsg;
     }
 

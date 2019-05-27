@@ -4,7 +4,6 @@ import edu.bgcms.model.user.User;
 import edu.bgcms.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +22,7 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/getList")
-    public List<User> getList(String keyWord, Model model){
+    public List<User> getList(String keyWord){
         //调用service方法
         List<User> list= userServivce.getList(keyWord);
 //        return GsonUtils.object2json(list);

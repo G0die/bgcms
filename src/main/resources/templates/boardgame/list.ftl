@@ -35,7 +35,7 @@
         <div class="col-sm-12">
             <div class="ibox ">
                 <div class="ibox-title">
-                    <h5>jQuery Grid Plugin – jqGrid</h5>
+                    <h5>桌游列表</h5>
                 </div>
                 <div class="ibox-content">
 
@@ -255,7 +255,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">玩家数量：</label>
             <div class="col-sm-9">
-                <input type="text" name="maxPlayers" class="form-control" placeholder="请输入玩家数量">
+                <input type="text" name="maxplayers" class="form-control" placeholder="请输入玩家数量">
                 <span class="help-block m-b-none"> </span>
             </div>
         </div>

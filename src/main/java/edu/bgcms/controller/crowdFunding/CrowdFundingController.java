@@ -23,9 +23,16 @@ public class CrowdFundingController {
     @Autowired
     OrderMapper orderMapper;
 
+
+
+    /**
+     * 跳转支付宝支付页面
+     * @param orderId
+     * @return
+     */
     @RequestMapping(value = "/toPayView", produces = "text/html; charset=UTF-8")
     @ResponseBody
-    public String toIndex(String orderId) {
+    public String toPayView(String orderId) {
         String result = "";
         try {
             Order order = orderMapper.selectByPrimaryKey(orderId);
@@ -93,6 +100,7 @@ public class CrowdFundingController {
         String result = "";
         return "/crowdFunding/return";
     }
+
 
     @RequestMapping("/notify_url")
     @ResponseBody

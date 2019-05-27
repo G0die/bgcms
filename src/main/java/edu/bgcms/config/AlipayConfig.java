@@ -26,10 +26,10 @@ public class AlipayConfig {
     public static String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlGrmES2sco3gBCdp6WXHdvDlKzvGMzaunJg5dYeq3pUk7BFJw9oVcJ618I9aYhN4XuWOT+P7BOurjeledMJ7XjrQBvHixETvCBFuvEXbjZSDCbGIt649EM1LBemceN5lEFSbyAjXr5W3e0cB2g0kEMY+b6HK6MB9SHU0wENsIKNQfS3yStdcRkCxWAl4U6o6tLoxya8Tka8AMikykbVW7qjsfI7MsaMlHFWyo6suIHvFaRaPboDh9SklVDeqUxC5/P/fa9JEo1ggU2LIbT81azaypS+pL3cz+OJnGWrhsP1cB+byGmR/MZzWb1BmACXwGGjykd7tr3CDATZ3T3i5DQIDAQAB";
 	
     // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://bgcms.free.idcfengye.com/notify_url";
+	public static String notify_url = "http://bgcms.free.idcfengye.com/crowdFunding/notify_url";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = "http://bgcms.free.idcfengye.com/return_url";
+	public static String return_url = "http://bgcms.free.idcfengye.com/crowdFunding/return_url";
 
 	// 签名方式
 	public static String sign_type = "RSA2";
