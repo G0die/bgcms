@@ -9,6 +9,7 @@ import edu.bgcms.dto.AjaxMsg;
 import edu.bgcms.model.boardGame.BoardGame;
 import edu.bgcms.model.boardGame.UserFBg;
 import edu.bgcms.model.order.Order;
+import edu.bgcms.model.shiro.Role;
 import edu.bgcms.service.boardGame.BoardGameService;
 import edu.bgcms.utils.MyTools;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/boardGame")
@@ -41,6 +39,24 @@ public class BoardGameController {
         return "/boardgame/list";
     }
 
+
+    @ResponseBody
+    @RequestMapping("/crowdFundingBg")
+    public AjaxMsg crowdFundingBg() {
+        AjaxMsg ajaxMsg = new AjaxMsg();
+
+        try{
+            List<BoardGame> list = boardGameMapper.crowdFundingBg();
+            ajaxMsg.setData(list);
+        }catch (Exception e){
+            e.printStackTrace();
+            ajaxMsg.setStatus(0);
+            ajaxMsg.setMsg("获取众筹列表失败");
+            return ajaxMsg;
+        }
+        ajaxMsg.setStatus(1);
+        return ajaxMsg;
+    }
     @RequestMapping("/details")
     public String toDeetails(Model model, String uuid, HttpServletRequest request) {
         BoardGame bg = boardGameMapper.selectByPrimaryKey(uuid);
@@ -88,6 +104,24 @@ public class BoardGameController {
         msg.setStatus(1);
         return msg;
 
+    }
+
+    @ResponseBody
+    @RequestMapping("/getCreateByme")
+    public AjaxMsg getCreateByme() {
+        AjaxMsg ajaxMsg = new AjaxMsg();
+        List<Role> roles = new ArrayList<>();
+        try{
+            List<BoardGame> list = boardGameMapper.getCreateByme(MyTools.getCurUser().getUuid());
+            ajaxMsg.setData(list);
+            ajaxMsg.setStatus(1);
+        }catch (Exception e){
+            e.printStackTrace();
+            ajaxMsg.setStatus(0);
+            ajaxMsg.setMsg("获取众筹列表失败");
+            return ajaxMsg;
+        }
+        return ajaxMsg;
     }
 
     @ResponseBody

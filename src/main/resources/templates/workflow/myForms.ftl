@@ -24,7 +24,7 @@
                     <h5>我的申请</h5>
                 </div>
                 <div class="ibox-content">
-                    <table id="MyFormsTabel" class="table"
+                    <table id="MyFormsTabel" class="table">
 
                     </table>
 

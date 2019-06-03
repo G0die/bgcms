@@ -24,7 +24,7 @@
                     <h5>待我审批</h5>
                 </div>
                 <div class="ibox-content">
-                    <table id="pendingFormsTabel" class="table"
+                    <table id="pendingFormsTabel" class="table">
 
                     </table>
 

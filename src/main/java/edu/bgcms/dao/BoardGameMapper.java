@@ -23,4 +23,8 @@ public interface BoardGameMapper {
 
     @Select("SELECT uuid,name FROM `boardgame` ORDER BY stars DESC,views DESC")
     public List<BoardGame> selectNameAll();
+    @Select("SELECT * FROM `boardgame` WHERE applicant = #{uuid} ORDER BY applicantiontime")
+    List<BoardGame> getCreateByme(String uuid);
+    @Select("SELECT * FROM `boardgame` WHERE status = '众筹中' ORDER BY applicantiontime")
+    List<BoardGame> crowdFundingBg();
 }

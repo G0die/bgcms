@@ -6,15 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="renderer" content="webkit">
 
-	<title>H+ 后台主题UI框架 - 主页</title>
-
-	<meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-	<meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
-
+	<title>桌游社管理系统</title>
 	<!--[if lt IE 9]>
 	<meta http-equiv="refresh" content="0;ie.html" />
 	<![endif]-->
-
 	<link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 	<link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 	<link href="css/animate.css" rel="stylesheet">
@@ -65,6 +60,7 @@
 					<ul class="nav nav-second-level">
 						<li>
 							<a class="J_menuItem" href="/user/list">社员展示</a>
+							<a class="J_menuItem" href="/user/manager">社员管理</a>
 						</li>
 					</ul>
 				</li>
@@ -103,12 +99,24 @@
 						<li><a class="J_menuItem" href="/permission/rolerList">权限管理</a></li>
 					</ul>
 				</li>
+
+
 				<#--我的申请-->
 				<li>
 					<a href="#"><i class="fa fa-table"></i> <span class="nav-label">表单申请</span><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<li><a class="J_menuItem" href="/workflow/myForms">我的申请</a></li>
 						<li><a class="J_menuItem" href="/workflow/pendingFormsView">待我审批</a></li>
+					</ul>
+				</li>
+				<#--众筹-->
+				<li>
+					<a href="#"><i class="fa fa-table"></i> <span class="nav-label">众筹</span><span class="fa arrow"></span></a>
+					<ul class="nav nav-second-level">
+						<#--<li><a class="J_menuItem" href="/crowdFunding/View">众筹列表</a></li>-->
+						<#--<li><a class="J_menuItem" href="/crowdFunding/myForms">我参与的</a></li>-->
+						<#--<li><a class="J_menuItem" href="/crowdFunding/createByMeView">我创建的</a></li>-->
+						<li><a class="J_menuItem" href="/crowdFunding/createByMeView">我创建的</a></li>
 					</ul>
 				</li>
 			</ul>

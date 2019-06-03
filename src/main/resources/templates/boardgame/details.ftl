@@ -68,15 +68,15 @@
                                     <button type="button" onclick="followOrCancel()" class="btn btn-w-m <#if followFlag> btn-danger<#else> btn-primary</#if>" id="BtnFollow" ><#if followFlag> 取消关注<#else> 关注</#if></button>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <button type="button" class="btn btn-w-m btn-block"><i class="fa fa-coffee"></i>流浪图</button>
-                                </div>
-                                <div class="col-sm-6">
-                                    <button type="button" class="btn btn-w-m btn-block"><i class="fa fa-coffee"></i>评分</button>
-                                </div>
-                            </div>
-                            <button>众筹</button>
+                            <#--<div class="row">-->
+                                <#--<div class="col-sm-6">-->
+                                    <#--<button type="button" class="btn btn-w-m btn-block"><i class="fa fa-coffee"></i>流浪图</button>-->
+                                <#--</div>-->
+                                <#--<div class="col-sm-6">-->
+                                    <#--<button type="button" class="btn btn-w-m btn-block"><i class="fa fa-coffee"></i>评分</button>-->
+                                <#--</div>-->
+                            <#--</div>-->
+                            <#--<button>众筹</button>-->
                         </div>
                     </div>
                 </div>

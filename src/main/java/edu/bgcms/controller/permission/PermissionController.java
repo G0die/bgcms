@@ -1,16 +1,19 @@
 package edu.bgcms.controller.permission;
 
 
-import edu.bgcms.dao.PermissionMapper;
-import edu.bgcms.dao.RoleMapper;
-import edu.bgcms.dao.RolePermissionMapper;
+import edu.bgcms.dao.*;
 import edu.bgcms.dto.AjaxMsg;
 import edu.bgcms.dto.PermissionDto;
+import edu.bgcms.dto.PersonRole;
 import edu.bgcms.model.shiro.Permission;
 import edu.bgcms.model.shiro.Role;
 import edu.bgcms.model.shiro.RolePermission;
+import edu.bgcms.model.shiro.UserRole;
+import edu.bgcms.model.user.User;
+import edu.bgcms.utils.MyTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,12 +28,26 @@ public class PermissionController {
 
     @Autowired
     PermissionMapper permissionMapper;
+
     @Autowired
     RolePermissionMapper rolePermissionMapper;
 
+    @Autowired
+    UserRoleMapper userRoleMapper;
+
+    @Autowired
+    UserMapper userMapper;
+
     @RequestMapping("/rolerList")
-    public String toIndex() {
+    public String rolerList() {
         return "/permission/rolerList";
+    }
+
+    @RequestMapping("/personRole")
+    public String personRole(Model model,String userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        model.addAttribute("userName",user.getUsername());
+        return "/permission/personRole";
     }
 
     @ResponseBody
@@ -38,9 +55,9 @@ public class PermissionController {
     public AjaxMsg getRoleList() {
         AjaxMsg ajaxMsg = new AjaxMsg();
         List<Role> roles = new ArrayList<>();
-        try{
-            roles  = roleMapper.getAllRole();
-        }catch (Exception e){
+        try {
+            roles = roleMapper.getAllRole();
+        } catch (Exception e) {
             e.printStackTrace();
             ajaxMsg.setStatus(0);
             ajaxMsg.setMsg("获取角色列表失败");
@@ -51,15 +68,56 @@ public class PermissionController {
         return ajaxMsg;
     }
 
+    @ResponseBody
+    @RequestMapping("/getRoleListByUser")
+    public AjaxMsg getRoleListByUser(String uuid) {
+        AjaxMsg ajaxMsg = new AjaxMsg();
+        try {
+            List<PersonRole> roles = roleMapper.getRoleListByUser(uuid);
+            ajaxMsg.setData(roles);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxMsg.setStatus(0);
+            ajaxMsg.setMsg("获取角色列表失败");
+            return ajaxMsg;
+        }
+        ajaxMsg.setStatus(1);
+        return ajaxMsg;
+    }
+
+    @ResponseBody
+    @RequestMapping("/updUR")
+    public AjaxMsg updUR(int roleId, int flag) {
+        AjaxMsg ajaxMsg = new AjaxMsg();
+        try {
+            if (flag == -1) {
+                UserRole ur = new UserRole();
+                ur.setRoleId(roleId);
+                ur.setUserId(MyTools.getCurUser().getUuid());
+                userRoleMapper.insert(ur);
+            } else {
+                userRoleMapper.deleteByPrimaryKey(flag);
+            }
+            ajaxMsg.setMsg("操作成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxMsg.setStatus(0);
+            ajaxMsg.setMsg("操作失败");
+            return ajaxMsg;
+        }
+        ajaxMsg.setStatus(1);
+        return ajaxMsg;
+    }
+
 
     @ResponseBody
     @RequestMapping("/getPermissionListByRole")
     public AjaxMsg getPermissionListByRole(String roleId) {
         AjaxMsg ajaxMsg = new AjaxMsg();
         List<PermissionDto> permissions = new ArrayList<>();
-        try{
-            permissions  = permissionMapper.selectByRole(roleId);
-        }catch (Exception e){
+        try {
+            permissions = permissionMapper.selectByRole(roleId);
+        } catch (Exception e) {
             e.printStackTrace();
             ajaxMsg.setStatus(0);
             ajaxMsg.setMsg("获取权限列表失败");
@@ -79,15 +137,16 @@ public class PermissionController {
 
     /**
      * 添加角色和权限关联
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping("/addRP")
     public AjaxMsg addRP(RolePermission rp) {
         AjaxMsg ajaxMsg = new AjaxMsg();
-        try{
+        try {
             rolePermissionMapper.insert(rp);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ajaxMsg.setStatus(0);
             ajaxMsg.setMsg("添加权限失败");
@@ -97,13 +156,14 @@ public class PermissionController {
         ajaxMsg.setMsg("添加权限成功");
         return ajaxMsg;
     }
+
     @ResponseBody
     @RequestMapping("/addRole")
     public AjaxMsg addRole(Role role) {
         AjaxMsg ajaxMsg = new AjaxMsg();
-        try{
+        try {
             roleMapper.insert(role);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ajaxMsg.setStatus(0);
             ajaxMsg.setMsg("添加角色失败");
@@ -119,10 +179,10 @@ public class PermissionController {
     @RequestMapping("/delRole")
     public AjaxMsg delRole(int roleId) {
         AjaxMsg ajaxMsg = new AjaxMsg();
-        try{
+        try {
             rolePermissionMapper.deleteByRoleId(roleId);
             roleMapper.deleteByPrimaryKey(roleId);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ajaxMsg.setStatus(0);
             ajaxMsg.setMsg("删除角色失败");
@@ -132,13 +192,14 @@ public class PermissionController {
         ajaxMsg.setMsg("删除角色成功");
         return ajaxMsg;
     }
+
     @ResponseBody
     @RequestMapping("/delRP")
     public AjaxMsg delRp(int rpId) {
         AjaxMsg ajaxMsg = new AjaxMsg();
-        try{
+        try {
             rolePermissionMapper.deleteByPrimaryKey(rpId);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             ajaxMsg.setStatus(0);
             ajaxMsg.setMsg("取消授权失败");

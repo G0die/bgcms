@@ -3,16 +3,20 @@ package edu.bgcms.controller.crowdFunding;
 import com.alipay.api.internal.util.AlipaySignature;
 import edu.bgcms.config.AlipayConfig;
 import edu.bgcms.dao.OrderMapper;
+import edu.bgcms.dto.AjaxMsg;
+import edu.bgcms.dto.OrderDto;
 import edu.bgcms.model.order.Order;
 import edu.bgcms.service.aliPay.AliPayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -23,7 +27,42 @@ public class CrowdFundingController {
     @Autowired
     OrderMapper orderMapper;
 
+    @RequestMapping("/indexView")
+    public String indexView() {
+        return "/crowdFunding/index";
+    }
 
+    @RequestMapping("/createByMeView")
+    public String toCreateByMeView() {
+        return "/crowdFunding/createByMe";
+    }
+
+    @RequestMapping("/joinByMeView")
+    public String joinByMeView() {
+        return "/crowdFunding/joinByMe";
+    }
+    @RequestMapping("/crowdFundingDetailView")
+    public String toCrowdFundingDetailView(Model model,String bgId) {
+        model.addAttribute("bgId",bgId);
+        return "/crowdFunding/crowdFundingDetail";
+    }
+
+    @ResponseBody
+    @RequestMapping("/getJoinCfListByBgId")
+    public AjaxMsg getJoinCfListByBgId(String bgId) {
+        AjaxMsg ajaxMsg = new AjaxMsg();
+        try{
+            List<OrderDto> list  = orderMapper.getJoinCfListByBgId(bgId);
+            ajaxMsg.setData(list);
+        }catch (Exception e){
+            e.printStackTrace();
+            ajaxMsg.setStatus(0);
+            ajaxMsg.setMsg("获取众筹详情列表失败");
+            return ajaxMsg;
+        }
+        ajaxMsg.setStatus(1);
+        return ajaxMsg;
+    }
 
     /**
      * 跳转支付宝支付页面
