@@ -1,8 +1,14 @@
+server:
+  #端口号
+  port: 8080
+  #项目名，如果不设定，默认是 /
+#  context-path: /demo
+
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/bgcms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://47.98.149.208:3306/bgcms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
-    password: root
+    password: yongheng123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     #   数据源其他配置
