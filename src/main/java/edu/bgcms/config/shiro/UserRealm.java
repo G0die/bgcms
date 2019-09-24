@@ -78,6 +78,11 @@ public class UserRealm extends AuthorizingRealm{
 			//用户名不存在
 			return null;//shiro底层会抛出UnKnowAccountException
 		}
+		/**
+		 * user.getPwd()是从数据库查出的密码
+		 * 会与subject.login(token);token中的密码进行校验
+		 * SimpleAuthenticationInfo()中第一和第三参数不重要 作用目前不明确
+		 */
 		//2.判断密码
 		return new SimpleAuthenticationInfo(user,user.getPwd(),"");
 	}
